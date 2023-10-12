@@ -1,0 +1,121 @@
+
+//SERVER 
+import java.io.*;
+import java.net.*;
+public class MyServer {
+    public static void main(String[] args){
+        try{
+            ServerSocket ss=new ServerSocket(6666);
+            Socket s=ss.accept();//establishes connection
+            DataInputStream dis=new DataInputStream(s.getInputStream());
+            String  str=(String)dis.readUTF();
+            System.out.println("message= "+str);
+            ss.close();
+        }catch(Exception e){System.out.println(e);}
+    }
+} 
+
+//CLIENT
+import java.io.*;
+import java.net.*;
+public class MyClient {
+    public static void main(String[] args) {
+        try{
+            Socket s=new Socket("localhost",6666);
+            DataOutputStream dout=new DataOutputStream(s.getOutputStream());
+            dout.writeUTF("Hello Server");
+            dout.flush();
+            dout.close();
+            s.close();
+        }catch(Exception e){System.out.println(e);}
+    }
+}  
+
+
+
+//CLICKSCOUNTS
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+class ClicksCount implements ActionListener{
+    int count=0;
+    ClicksCount(){
+        JFrame frame = new JFrame();
+        JButton button1 = new JButton("button1");
+        button1.addActionListener(this);
+        frame.setLayout(new BoxLayout(frame.getContentPane(),BoxLayout.Y_AXIS));
+        frame.add(button1);
+        frame.getRootPane().setDefaultButton(button1);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(450,450);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+    }
+    public void actionPerformed(ActionEvent e){
+        count ++;
+        System.out.println("you have clicked the Active button"+count+"times");}
+    public static void main(String []arg ){
+        ClicksCount clicks =new ClicksCount();
+    }
+}
+
+
+
+
+//JBUTTON
+import java.awt.FlowLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+public class JFrameExample
+{
+    public static void main(String s[]){
+        JFrame frame = new JFrame("JFrrame example");
+        JPanel panel = new JPanel();
+        panel.setLayout(new FlowLayout());
+        JLabel label = new JLabel("JFrame by example");
+        JButton button = new JButton();
+        button.setText("Button");
+        panel.add(label);
+        panel.add(button);
+        frame.add(panel);
+        frame.setSize(200,300);
+        frame.setLocationRelativeTo(null);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+    }
+}
+
+
+
+
+
+//RECEIVER
+import java.net.*;
+public class DReceiver {
+    public static void main(String []arg) throws Exception{
+    DatagramSocket ds =new DatagramSocket(3000);
+    byte[] buf = new byte[1024];
+    DatagramPacket dp =new DatagramPacket(buf,1024);
+    ds.receive(dp);
+    String str = new String(dp.getData(),0,dp.getLength());
+        System.out.println(str);
+        ds.close();
+    }
+}
+
+//SENDER
+import java.net.*;
+public class DSender {
+    public static void main (String []arg) throws Exception{
+        DatagramSocket ds = new DatagramSocket();
+        String str = "welcome java";
+        InetAddress ip = InetAddress.getByName("127.0.0.1");
+        DatagramPacket dp =new DatagramPacket(str.getBytes(),str.length(),ip,3000);
+        ds.send(dp);
+        ds.close();
+    }
+}
+
+
