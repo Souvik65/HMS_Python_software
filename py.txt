@@ -1,14 +1,12 @@
 # Q.14 Take an integer input N from the user.Print N Fibonacci numbers. 
 #ans
-t=int(input("enter a number "))
+s = int(input("Enter a value: "))
 a=0
 b=1
-c=0
-while c<t:
-    c=a+b
+while a <= s:
     print(a)
     a=b
-    b=c
+    b=a+b
 
 
 
