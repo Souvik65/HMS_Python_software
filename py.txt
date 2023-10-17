@@ -1,0 +1,78 @@
+# Q.14 Take an integer input N from the user.Print N Fibonacci numbers. 
+#ans
+t=int(input("enter a number "))
+a=0
+b=1
+c=0
+while c<t:
+    c=a+b
+    print(a)
+    a=b
+    b=c
+
+
+
+#Q.15 Take an integer input N from the user.Find Factorial of N and print it .
+#ans
+t=int(input("enter a number"))
+fact=1
+for t in range(1,t+1):
+    fact=t*fact
+    t=t-1
+print(fact)
+
+
+# Q.16 Print first 10 prime numbers.
+#ans:-
+lower = 0
+upper = 10
+print("Prime numbers between",lower,"and",upper,"are:")
+
+for num in range(lower,upper + 1):
+   if num > 1:
+       for i in range(2,num):
+           if (num % i) == 0:
+               break
+       else:
+           print(num)
+
+
+
+
+# PRIME 
+number = int(input("Enter any number: "))
+if number > 1:
+    for i in range(2, number):
+        if (number % i) == 0:
+            print(number, "is not a prime number")
+            break
+    else:
+        print(number, "is a prime number")
+else:
+    print(number, "is not a prime number")
+    
+
+
+
+# Python program to check if the number is an Armstrong number or not
+num = int(input("Enter a number: "))
+sum = 0
+temp = num
+while temp > 0:
+   digit = temp % 10
+   sum += digit ** 3
+   temp //= 10
+if num == sum:
+   print(num,"is an Armstrong number")
+else:
+   print(num,"is not an Armstrong number")
+
+
+
+#Count Number of Digits in an Integer using while loop
+num = 3452
+b=str(num)
+c=len(b)
+print(c)
+
+
