@@ -1,270 +1,205 @@
+//THICK LINE
+#include <stdio.h>
+#include <graphics.h>
+#include <math.h>
+int main() {
+    int gd = DETECT, gm;
+    int x1,y1,x2,y2,dx,dy,length,thickness;
+    initgraph(&gd, &gm,"");
+    printf("Enter starting coordinates-");
+    scanf("%d%d",&x1,&y1);
+    printf("Enter ending coordinates-");
+    scanf("%d%d",&x2,&y2);
+    printf("Enter thickness size-");
+    scanf("%d",&thickness);
 
-//SERVER 
-import java.io.*;
-import java.net.*;
-public class MyServer {
-    public static void main(String[] args){
-        try{
-            ServerSocket ss=new ServerSocket(6666);
-            Socket s=ss.accept();//establishes connection
-            DataInputStream dis=new DataInputStream(s.getInputStream());
-            String  str=(String)dis.readUTF();
-            System.out.println("message= "+str);
-            ss.close();
-        }catch(Exception e){System.out.println(e);}
-    }
-} 
+    dx = abs(x2 - x1); 
+	dy = abs(y2 - y1);
+    length = (dx > dy) ? dx : dy;
 
-//CLIENT
-import java.io.*;
-import java.net.*;
-public class MyClient {
-    public static void main(String[] args) {
-        try{
-            Socket s=new Socket("localhost",6666);
-            DataOutputStream dout=new DataOutputStream(s.getOutputStream());
-            dout.writeUTF("Hello Server");
-            dout.flush();
-            dout.close();
-            s.close();
-        }catch(Exception e){System.out.println(e);}
-    }
-}  
+    float x_inc = (float)(x2 - x1) / length;
+    float y_inc = (float)(y2 - y1) / length;
 
-
-
-//CLICKSCOUNTS
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.*;
-class ClicksCount implements ActionListener{
-    int count=0;
-    ClicksCount(){
-        JFrame frame = new JFrame();
-        JButton button1 = new JButton("button1");
-        button1.addActionListener(this);
-        frame.setLayout(new BoxLayout(frame.getContentPane(),BoxLayout.Y_AXIS));
-        frame.add(button1);
-        frame.getRootPane().setDefaultButton(button1);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(450,450);
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
-    }
-    public void actionPerformed(ActionEvent e){
-        count ++;
-        System.out.println("you have clicked the Active button"+count+"times");}
-    public static void main(String []arg ){
-        ClicksCount clicks =new ClicksCount();
-    }
-}
-
-
-
-
-//JBUTTON
-import java.awt.FlowLayout;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-public class JFrameExample
-{
-    public static void main(String s[]){
-        JFrame frame = new JFrame("JFrrame example");
-        JPanel panel = new JPanel();
-        panel.setLayout(new FlowLayout());
-        JLabel label = new JLabel("JFrame by example");
-        JButton button = new JButton();
-        button.setText("Button");
-        panel.add(label);
-        panel.add(button);
-        frame.add(panel);
-        frame.setSize(200,300);
-        frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-    }
-}
-
-
-
-
-
-//RECEIVER
-import java.net.*;
-public class DReceiver {
-    public static void main(String []arg) throws Exception{
-    DatagramSocket ds =new DatagramSocket(3000);
-    byte[] buf = new byte[1024];
-    DatagramPacket dp =new DatagramPacket(buf,1024);
-    ds.receive(dp);
-    String str = new String(dp.getData(),0,dp.getLength());
-        System.out.println(str);
-        ds.close();
-    }
-}
-
-//SENDER
-import java.net.*;
-public class DSender {
-    public static void main (String []arg) throws Exception{
-        DatagramSocket ds = new DatagramSocket();
-        String str = "welcome java";
-        InetAddress ip = InetAddress.getByName("127.0.0.1");
-        DatagramPacket dp =new DatagramPacket(str.getBytes(),str.length(),ip,3000);
-        ds.send(dp);
-        ds.close();
-    }
-}
-
-
-
-//Calculator
-import java.awt.event.*;
-import java.awt.*;
-import javax.swing.*;
-public class Calculator extends JFrame implements ActionListener{
-    JButton b10,b11,b12,b13,b14,b15;
-    JButton b[]=new JButton[10];
-    int i;
-    float r,n1,n2;
-    JTextField res;
-    char op;
-    public Calculator(){
-        super("Calculator");
-        setLayout(new BorderLayout());
-        JPanel p=new JPanel();
-        p.setLayout(new GridLayout(4,4));
-        for(int i=0;i<=9;i++){
-            b[i]=new JButton(i+"");
-            p.add(b[i]);
-            b[i].addActionListener(this);}
-        b10=new JButton("+");
-        p.add(b10);
-        b10.addActionListener(this);
-        b11=new JButton("-");
-        p.add(b11);
-        b11.addActionListener(this);
-        b12=new JButton("*");
-        p.add(b12);
-        b12.addActionListener(this);
-        b13=new JButton("/");
-        p.add(b13);
-        b13.addActionListener(this);
-        b14=new JButton("=");
-        p.add(b14);
-        b14.addActionListener(this);
-        b15=new JButton("C");
-        p.add(b15);
-        b15.addActionListener(this);
-        res=new JTextField(10);
-        add(p,BorderLayout.CENTER);
-        add(res,BorderLayout.NORTH);
-        setVisible(true);
-        setSize(200,200);}
-    public void actionPerformed(ActionEvent ae){
-        JButton pb=(JButton)ae.getSource();
-        if(pb==b15){
-            r=n1=n2=0;
-            res.setText("");}
-        else
-        if(pb==b14){
-            n2=Integer.parseInt(res.getText());
-            eval();
-            res.setText(""+r);}
-        else{
-            boolean opf=false;
-            if(pb==b10){
-                op='+';
-                opf=true;}
-            if(pb==b11)
-            { op='-';opf=true;}
-            if(pb==b12)
-            { op='*';opf=true;}
-            if(pb==b13)
-            { op='/';opf=true;}
-            if(opf==false){
-                for(i=0;i<10;i++){
-                    if(pb==b[i]){
-                        String t=res.getText();
-                        t+=i;
-                        res.setText(t);}}}
-            else{
-                n1=Integer.parseInt(res.getText());
-                res.setText("");}}}
-    float eval(){
-        switch(op){
-            case '+':   r=n1+n2;  break;
-            case '-':    r=n1-n2;   break;
-            case '*':    r=n1*n2; break;
-            case '/':    r=n1/n2; break; }
-        return 0;}
-    public static void main(String arg[]){
-        new Calculator();}}
-
-
-
-//IPAddressFinderGUI
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-public class IPAddressFinderGUI extends JFrame {
-    private JTextField urlTextField;
-    private JButton findIpButton;
-    private JLabel resultLabel;
-
-    public IPAddressFinderGUI() {
-        setTitle("IP Address Finder");
-        setSize(300, 150);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
-
-        JPanel panel = new JPanel();
-        panel.setLayout(new GridLayout(3, 1));
-
-        JLabel label = new JLabel("Enter URL:");
-        urlTextField = new JTextField();
-        findIpButton = new JButton("Find IP");
-        resultLabel = new JLabel("");
-
-        findIpButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                findIP();
-            }
-        });
-
-        panel.add(label);
-        panel.add(urlTextField);
-        panel.add(findIpButton);
-        panel.add(resultLabel);
-
-        add(panel);
-    }
-
-    private void findIP() {
-        String url = urlTextField.getText();
-        try {
-            InetAddress inetAddress = InetAddress.getByName(url);
-            String ipAddress = inetAddress.getHostAddress();
-            resultLabel.setText("IP Address: " + ipAddress);
-        } catch (UnknownHostException e) {
-            resultLabel.setText("Invalid URL or Host not found.");
+    for ( int i = 0; i <= length; i++) {
+        for (int j = -thickness / 2; j <= thickness / 2; j++) {
+            putpixel(x1 + i * x_inc, y1 + i * y_inc + j, WHITE);
         }
     }
+    getch();
+    closegraph();
+}
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                IPAddressFinderGUI gui = new IPAddressFinderGUI();
-                gui.setVisible(true);
+
+//MID POINT
+#include <graphics.h>
+
+void drawCircle(int x0, int y0, int radius) {
+    int x = radius, y = 0, err = 0;
+
+    while (x >= y) {
+        for (int i = -1; i <= 1; i += 2) {
+            for (int j = -1; j <= 1; j += 2) {
+                putpixel(x0 + i * x, y0 + j * y, 7);
+                putpixel(x0 + i * y, y0 + j * x, 7);
             }
-        });
+        }
+
+        if (err <= 0) {
+            y += 1;
+            err += 2 * y + 1;
+        }
+
+        if (err > 0) {
+            x -= 1;
+            err -= 2 * x + 1;
+        }
     }
 }
 
+int main() {
+    int gd = DETECT, gm, x, y, r;
+
+    initgraph(&gd, &gm, "C:\\Turboc3\\BGI");
+
+    printf("Enter radius of circle: ");
+    scanf("%d", &r);
+
+    printf("Enter coordinates of center (x and y): ");
+    scanf("%d%d", &x, &y);
+
+    drawCircle(x, y, r);
+
+    delay(5000);
+    closegraph();
+
+    return 0;
+}
+
+
+
+//Bresenham's Circle
+#include <stdio.h>
+#include <graphics.h>
+
+// Function to draw a circle using Bresenham's Circle Drawing Algorithm
+void drawBresenhamCircle(int xCenter, int yCenter, int radius) {
+    int x = 0;
+    int y = radius;
+    int d = 3 - 2 * radius;
+
+    while (x <= y) {
+        // Draw the eight-way symmetric points
+        putpixel(xCenter + x, yCenter + y, WHITE);
+        putpixel(xCenter - x, yCenter + y, WHITE);
+        putpixel(xCenter + x, yCenter - y, WHITE);
+        putpixel(xCenter - x, yCenter - y, WHITE);
+        putpixel(xCenter + y, yCenter + x, WHITE);
+        putpixel(xCenter - y, yCenter + x, WHITE);
+        putpixel(xCenter + y, yCenter - x, WHITE);
+        putpixel(xCenter - y, yCenter - x, WHITE);
+
+        if (d < 0)
+            d = d + 4 * x + 6;
+        else {
+            d = d + 4 * (x - y) + 10;
+            y--;
+        }
+        x++;
+    }
+}
+
+int main() {
+    int gd = DETECT, gm;
+    initgraph(&gd, &gm, NULL);
+
+    int xCenter, yCenter, radius;
+    
+    xCenter = 200;
+    yCenter = 200;
+    radius = 100;
+
+    drawBresenhamCircle(xCenter, yCenter, radius);
+
+    getch(); // Pause for 5 seconds
+    closegraph();
+    
+}
+
+
+
+//Bresenham's Line
+#include <stdio.h>
+#include <graphics.h>
+
+// Function to draw a line using Bresenham's Line Drawing Algorithm
+void drawBresenhamLine(int x1, int y1, int x2, int y2) {
+    int dx = abs(x2 - x1);
+    int dy = -abs(y2 - y1);
+    int sx = x1 < x2 ? 1 : -1;
+    int sy = y1 < y2 ? 1 : -1;
+    int error = dx + dy;
+    int e2;
+
+    while (1) {
+        putpixel(x1, y1, WHITE);
+        
+        if (x1 == x2 && y1 == y2) break;
+        
+        e2 = 2 * error;
+        
+        if (e2 >= dy) {
+            error += dy;
+            x1 += sx;
+        }
+        
+        if (e2 <= dx) {
+            error += dx;
+            y1 += sy;
+        }
+    }
+}
+
+int main() {
+    int gd = DETECT, gm;
+    initgraph(&gd, &gm, NULL);
+
+    int x1, y1, x2, y2;
+    
+    x1 = 100;
+    y1 = 100;
+    x2 = 300;
+    y2 = 200;
+
+    drawBresenhamLine(x1, y1, x2, y2);
+
+    getch(); // Pause for 5 seconds
+    closegraph();
+}
+
+
+//DDA Circle drawing algorithm
+#include<stdio.h>
+#include<conio.h>
+#include<graphics.h>
+#include<math.h>
+void main()
+{
+int xc=340,yc=280,y,r,x;
+float theta;
+int gd=DETECT,gm;
+initgraph(&gd,&gm,"C:\\turboc3\\BGI");
+//printf("Enter the center of circle:");
+//scanf("%d%d",&xc,&yc);
+printf("Enter radius of circle:");
+scanf("%d",&r);
+for(theta=0;theta<=2*3.14;theta+=0.01)
+{
+x=(int)(xc+(r*cos(theta)));
+y=(int)(yc+(r*sin(theta)));
+putpixel(x,y,WHITE);
+}
+getch();
+closegraph();
+}
 
 
