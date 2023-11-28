@@ -1,12 +1,31 @@
 # Q.14 Take an integer input N from the user.Print N Fibonacci numbers. 
 #ans
-s = int(input("Enter a value: "))
-a=0
-b=1
-while a <= s:
-    print(a)
-    a=b
-    b=a+b
+limit = int(input("Enter the limit for the Fibonacci series: "))
+a, b = 0, 1
+for i in range(limit):
+    print(a, end=" ")
+    a, b = b, a + b
+
+
+
+
+a=int(input("enter a number "))
+print(bin(a),"binary")
+print(oct(a),"octal")
+print(hex(a),"hexadeci")
+
+
+char=input("enter a character ")
+asciiv=ord(char)
+print("ans is ",asciiv)
+
+
+
+y=int(input("enter year"))
+if (y%4==0 and y%100!=0) or (y%400==0):
+    print("leap")
+else:
+    print("not")
 
 
 
