@@ -1,3 +1,614 @@
+
+//Develop a swing window that will print words and characters count of a text written inside text area
+
+import javax.swing.*;
+        import java.awt.event.*;
+
+public class WordCharCounter extends JFrame {
+    private JTextArea textArea;
+    private JLabel wordCountLabel;
+    private JLabel charCountLabel;
+
+    public WordCharCounter() {
+        setTitle("Word and Character Counter");
+        setSize(400, 300);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(null);
+
+        textArea = new JTextArea();
+        textArea.setBounds(20, 20, 350, 150);
+        textArea.setLineWrap(true);
+        textArea.setWrapStyleWord(true);
+        textArea.addKeyListener(new KeyAdapter() {
+            public void keyReleased(KeyEvent e) {
+                countWordsAndChars();
+            }
+        });
+        add(textArea);
+
+        wordCountLabel = new JLabel("Words: 0");
+        wordCountLabel.setBounds(20, 180, 100, 30);
+        add(wordCountLabel);
+
+        charCountLabel = new JLabel("Characters: 0");
+        charCountLabel.setBounds(20, 220, 120, 30);
+        add(charCountLabel);
+    }
+
+    private void countWordsAndChars() {
+        String text = textArea.getText();
+        String[] words = text.trim().split("\\s+");
+        int wordCount = words.length;
+
+        int charCount = text.replaceAll("\\s", "").length();
+
+        wordCountLabel.setText("Words: " + wordCount);
+        charCountLabel.setText("Characters: " + charCount);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            WordCharCounter counter = new WordCharCounter();
+            counter.setVisible(true);
+        });
+    }
+}
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+//Create a food ordering system with text box, radio button, check box, combo box that
+will generate a Message dialog box which show total bill based on the order
+given as inputs.
+
+
+import javax.swing.*;
+import java.awt.event.*;
+
+public class FoodOrderingSystem extends JFrame {
+    private JTextField quantityField;
+    private JRadioButton pizzaButton, burgerButton;
+    private JCheckBox cokeCheckBox, friesCheckBox;
+    private JComboBox<String> sizeComboBox;
+    private JButton orderButton;
+
+    public FoodOrderingSystem() {
+        setTitle("Food Ordering System");
+        setSize(400, 300);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(null);
+
+        JLabel quantityLabel = new JLabel("Quantity:");
+        quantityLabel.setBounds(20, 20, 80, 30);
+        add(quantityLabel);
+
+        quantityField = new JTextField();
+        quantityField.setBounds(100, 20, 100, 30);
+        add(quantityField);
+
+        JLabel foodLabel = new JLabel("Select Food:");
+        foodLabel.setBounds(20, 60, 100, 30);
+        add(foodLabel);
+
+        pizzaButton = new JRadioButton("Pizza");
+        pizzaButton.setBounds(120, 60, 80, 30);
+        add(pizzaButton);
+
+        burgerButton = new JRadioButton("Burger");
+        burgerButton.setBounds(210, 60, 80, 30);
+        add(burgerButton);
+
+        ButtonGroup foodGroup = new ButtonGroup();
+        foodGroup.add(pizzaButton);
+        foodGroup.add(burgerButton);
+
+        JLabel sizeLabel = new JLabel("Size:");
+        sizeLabel.setBounds(20, 100, 80, 30);
+        add(sizeLabel);
+
+        String[] sizes = {"Small", "Medium", "Large"};
+        sizeComboBox = new JComboBox<>(sizes);
+        sizeComboBox.setBounds(100, 100, 100, 30);
+        add(sizeComboBox);
+
+        JLabel extrasLabel = new JLabel("Extras:");
+        extrasLabel.setBounds(20, 140, 80, 30);
+        add(extrasLabel);
+
+        cokeCheckBox = new JCheckBox("Coke");
+        cokeCheckBox.setBounds(100, 140, 80, 30);
+        add(cokeCheckBox);
+
+        friesCheckBox = new JCheckBox("Fries");
+        friesCheckBox.setBounds(180, 140, 80, 30);
+        add(friesCheckBox);
+
+        orderButton = new JButton("Place Order");
+        orderButton.setBounds(120, 190, 120, 30);
+        add(orderButton);
+
+        orderButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                calculateBill();
+            }
+        });
+    }
+
+    private void calculateBill() {
+        double totalBill = 0;
+
+        int quantity = Integer.parseInt(quantityField.getText());
+
+        if (pizzaButton.isSelected()) {
+            totalBill += quantity * 8.99; // Pizza price
+        } else if (burgerButton.isSelected()) {
+            totalBill += quantity * 5.99; // Burger price
+        }
+
+        String selectedSize = (String) sizeComboBox.getSelectedItem();
+        if (selectedSize.equals("Small")) {
+            totalBill += 0; // Small size, no extra charge
+        } else if (selectedSize.equals("Medium")) {
+            totalBill += 2.00; // Medium size additional charge
+        } else if (selectedSize.equals("Large")) {
+            totalBill += 4.00; // Large size additional charge
+        }
+
+        if (cokeCheckBox.isSelected()) {
+            totalBill += 1.50; // Coke price
+        }
+        if (friesCheckBox.isSelected()) {
+            totalBill += 2.00; // Fries price
+        }
+
+        JOptionPane.showMessageDialog(this, "Total Bill: $" + totalBill);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            FoodOrderingSystem orderingSystem = new FoodOrderingSystem();
+            orderingSystem.setVisible(true);
+        });
+    }
+}
+
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+//Create a GUI window with text field, password field and a button. When the button will be clicked, the input given in the text and password field will be printed in the window
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class InputPrinter extends JFrame {
+    private JTextField textField;
+    private JPasswordField passwordField;
+    private JTextArea displayArea;
+
+    public InputPrinter() {
+        setTitle("Input Printer");
+        setSize(400, 300);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(null);
+
+        JLabel textLabel = new JLabel("Text:");
+        textLabel.setBounds(20, 20, 50, 30);
+        add(textLabel);
+
+        textField = new JTextField();
+        textField.setBounds(80, 20, 250, 30);
+        add(textField);
+
+        JLabel passwordLabel = new JLabel("Password:");
+        passwordLabel.setBounds(20, 60, 80, 30);
+        add(passwordLabel);
+
+        passwordField = new JPasswordField();
+        passwordField.setBounds(110, 60, 220, 30);
+        add(passwordField);
+
+        JButton displayButton = new JButton("Display");
+        displayButton.setBounds(150, 100, 100, 30);
+        add(displayButton);
+
+        displayArea = new JTextArea();
+        displayArea.setBounds(20, 150, 350, 100);
+        displayArea.setEditable(false);
+        add(displayArea);
+
+        displayButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String textInput = textField.getText();
+                String passwordInput = new String(passwordField.getPassword());
+
+                displayArea.setText("Text: " + textInput + "\nPassword: " + passwordInput);
+            }
+        });
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            InputPrinter inputPrinter = new InputPrinter();
+            inputPrinter.setVisible(true);
+        });
+    }
+}
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+//Q 10  GUI paint app
+
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+
+public class PaintApp extends JFrame {
+    private JPanel drawingPanel;
+    private JLabel coordinatesLabel;
+
+    public PaintApp() {
+        setTitle("Paint App");
+        setSize(600, 400);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLayout(new BorderLayout());
+
+        drawingPanel = new JPanel();
+        drawingPanel.setBackground(Color.WHITE);
+        drawingPanel.addMouseListener(new MouseAdapter() {
+            public void mousePressed(MouseEvent e) {
+                drawDot(e.getX(), e.getY());
+            }
+        });
+        drawingPanel.addMouseMotionListener(new MouseMotionAdapter() {
+            public void mouseMoved(MouseEvent e) {
+                showCoordinates(e.getX(), e.getY());
+            }
+        });
+        add(drawingPanel, BorderLayout.CENTER);
+
+        coordinatesLabel = new JLabel("X: 0, Y: 0");
+        coordinatesLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        add(coordinatesLabel, BorderLayout.SOUTH);
+    }
+
+    private void drawDot(int x, int y) {
+        Graphics g = drawingPanel.getGraphics();
+        g.setColor(Color.BLACK);
+        g.fillOval(x - 3, y - 3, 6, 6);
+        g.dispose();
+    }
+
+    private void showCoordinates(int x, int y) {
+        coordinatesLabel.setText("X: " + x + ", Y: " + y);
+    }
+
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            PaintApp paintApp = new PaintApp();
+            paintApp.setVisible(true);
+        });
+    }
+}
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+///BUTTON EXAMPLE
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public class ButtonExample {
+    public static void main(String[] args) {
+        JFrame f = new JFrame("Click Counter Example");
+        JButton b = new JButton("Click Here");
+        b.setBounds(50, 100, 95, 30);
+        f.add(b);
+        f.setSize(400, 400);
+        f.setLayout(null);
+        f.setVisible(true);
+
+        // Create a counter variable
+        final int[] clickCount = {0};
+
+        // Create a label to display the click count
+        JLabel label = new JLabel("Click count: 0");
+        label.setBounds(50, 150, 200, 30);
+        f.add(label);
+
+        // Add an ActionListener to the button
+        b.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // Increment the counter
+                clickCount[0]++;
+                label.setText("Click count: " + clickCount[0]);
+            }
+        });
+    }
+}
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+//clickcount
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
+class ClicksCount implements ActionListener{
+    int count=0;
+    ClicksCount(){
+        JFrame frame = new JFrame();
+        JButton button1 = new JButton("button1");
+        button1.addActionListener(this);
+        frame.setLayout(new BoxLayout(frame.getContentPane(),BoxLayout.Y_AXIS));
+        frame.add(button1);
+        frame.getRootPane().setDefaultButton(button1);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(450,450);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+    }
+    public void actionPerformed(ActionEvent e){
+        count ++;
+        System.out.println("you have clicked the Active button"+count+"times");}
+    public static void main(String []arg ){
+        ClicksCount clicks =new ClicksCount();
+    }
+}
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+/// sender , reciver
+import java.net.*;
+public class DReceiver {
+    public static void main(String []arg) throws Exception{
+    DatagramSocket ds =new DatagramSocket(3000);
+    byte[] buf = new byte[1024];
+    DatagramPacket dp =new DatagramPacket(buf,1024);
+    ds.receive(dp);
+    String str = new String(dp.getData(),0,dp.getLength());
+        System.out.println(str);
+        ds.close();
+    }
+}
+
+
+import java.net.*;
+public class DSender {
+    public static void main (String []arg) throws Exception{
+        DatagramSocket ds = new DatagramSocket();
+        String str = "welcome java";
+        InetAddress ip = InetAddress.getByName("127.0.0.1");
+        DatagramPacket dp =new DatagramPacket(str.getBytes(),str.length(),ip,3000);
+        ds.send(dp);
+        ds.close();
+    }
+}
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+/// client server
+
+import java.io.*;
+import java.net.*;
+public class MyClient{
+    public static void main(String []arg){
+        try{
+            Socket s=new Socket("localhost",6666);
+            DataOutputStream dout=new DataOutputStream(s.getOutputStream());
+            dout.writeUTF("hello asdsalkj");
+            dout.flush();
+            dout.close();
+            s.close();
+        }catch(Exception e){System.out.println(e);}
+    }
+}
+
+
+import java.io.*;
+import java.net.*;
+public class MyServer{
+    public static void main(String []arg){
+        try{
+            ServerSocket ss=new ServerSocket(6666);
+            Socket s=ss.accept();
+            DataInputStream dis=new DataInputStream(s.getInputStream());
+            String str=(String)dis.readUTF();
+            System.out.println("message= "+str);
+            ss.close();
+        }catch(Exception e){System.out.println(e);}
+    }
+}
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+///calculator
+import java.awt.event.*;
+import java.awt.*;
+import javax.swing.*;
+public class Reckoner extends JFrame implements ActionListener{
+    JButton b10,b11,b12,b13,b14,b15;
+    JButton b[]=new JButton[10];
+    int i;
+    float r,n1,n2;
+    JTextField res;
+    char op;
+    public Reckoner(){
+        super("Reckoner");
+        setLayout(new BorderLayout());
+        JPanel p=new JPanel();
+        p.setLayout(new GridLayout(4,4));
+        for(int i=0;i<=9;i++){
+            b[i]=new JButton(i+"");
+            p.add(b[i]);
+            b[i].addActionListener(this);}
+        b10=new JButton("+");
+        p.add(b10);
+        b10.addActionListener(this);
+        b11=new JButton("-");
+        p.add(b11);
+        b11.addActionListener(this);
+        b12=new JButton("*");
+        p.add(b12);
+        b12.addActionListener(this);
+        b13=new JButton("/");
+        p.add(b13);
+        b13.addActionListener(this);
+        b14=new JButton("=");
+        p.add(b14);
+        b14.addActionListener(this);
+        b15=new JButton("C");
+        p.add(b15);
+        b15.addActionListener(this);
+        res=new JTextField(10);
+        add(p,BorderLayout.CENTER);
+        add(res,BorderLayout.NORTH);
+        setVisible(true);
+        setSize(200,200);}
+    public void actionPerformed(ActionEvent ae){
+        JButton pb=(JButton)ae.getSource();
+        if(pb==b15){
+            r=n1=n2=0;
+            res.setText("");}
+        else
+        if(pb==b14){
+            n2=Integer.parseInt(res.getText());
+            eval();
+            res.setText(""+r);}
+        else{
+            boolean opf=false;
+            if(pb==b10){
+                op='+';
+                opf=true;}
+            if(pb==b11)
+            { op='-';opf=true;}
+            if(pb==b12)
+            { op='*';opf=true;}
+            if(pb==b13)
+            { op='/';opf=true;}
+            if(opf==false){
+                for(i=0;i<10;i++){
+                    if(pb==b[i]){
+                        String t=res.getText();
+                        t+=i;
+                        res.setText(t);}}}
+            else{
+                n1=Integer.parseInt(res.getText());
+                res.setText("");}}}
+    float eval(){
+        switch(op){
+            case '+':   r=n1+n2;  break;
+            case '-':    r=n1-n2;   break;
+            case '*':    r=n1*n2; break;
+            case '/':    r=n1/n2; break; }
+        return 0;}
+    public static void main(String arg[]){
+        new Reckoner();}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //program to implement flood fill of polygon with  four connected reagion
 #include<stdio.h>  
 #include<conio.h>  
