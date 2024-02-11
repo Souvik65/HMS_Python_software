@@ -1,53 +1,59 @@
-# Q.14 Take an integer input N from the user.Print N Fibonacci numbers. 
-#ans
-limit = int(input("Enter the limit for the Fibonacci series: "))
-a, b = 0, 1
-for i in range(limit):
-    print(a, end=" ")
-    a, b = b, a + b
-
-
-
-
-a=int(input("enter a number "))
-print(bin(a),"binary")
-print(oct(a),"octal")
-print(hex(a),"hexadeci")
-
-
-char=input("enter a character ")
-asciiv=ord(char)
-print("ans is ",asciiv)
-
-
-
-y=int(input("enter year"))
-if (y%4==0 and y%100!=0) or (y%400==0):
-    print("leap")
+Write a python program to check whether the given number is prime or not?
+num = 11
+# If given number is greater than 1
+if num > 1:
+	# Iterate from 2 to n / 2
+	for i in range(2, int(num/2)+1):
+		# If num is divisible by any number between
+		# 2 and n / 2, it is not prime
+		if (num % i) == 0:
+			print(num, "is not a prime number")
+			break
+	else:
+		print(num, "is a prime number")
 else:
-    print("not")
+	print(num, "is not a prime number")
+
+
+# Python program to shuffle a deck of card
+# importing modules
+import itertools, random
+# make a deck of cards
+deck = list(itertools.product(range(1,14),['Spade','Heart','Diamond','Club']))
+# shuffle the cards
+random.shuffle(deck)
+# draw five cards
+print("You got:")
+for i in range(5):
+   print(deck[i][0], "of", deck[i][1])
 
 
 
-#Q.15 Take an integer input N from the user.Find Factorial of N and print it .
-#ans
-t=int(input("enter a number"))
-fact=1
-for t in range(1,t+1):
-    fact=t*fact
-    t=t-1
-print(fact)
+# Python program to display the Fibonacci sequence
+def recur_fibo(n):
+   if n <= 1:
+       return n
+   else:
+       return(recur_fibo(n-1) + recur_fibo(n-2))
+nterms = 10
+# check if the number of terms is valid
+if nterms <= 0:
+   print("Plese enter a positive integer")
+else:
+   print("Fibonacci sequence:")
+   for i in range(nterms):
+       print(recur_fibo(i))
 
 
-# Q.16 Print first 10 prime numbers.
-#ans:-
-lower = 0
-upper = 10
-print("Prime numbers between",lower,"and",upper,"are:")
 
-for num in range(lower,upper + 1):
+# Python program to display all the prime numbers within an interval
+lower = 900
+upper = 1000
+print("Prime numbers between", lower, "and", upper, "are:")
+for num in range(lower, upper + 1):
+   # all prime numbers are greater than 1
    if num > 1:
-       for i in range(2,num):
+       for i in range(2, num):
            if (num % i) == 0:
                break
        else:
@@ -56,40 +62,109 @@ for num in range(lower,upper + 1):
 
 
 
-# PRIME 
-number = int(input("Enter any number: "))
-if number > 1:
-    for i in range(2, number):
-        if (number % i) == 0:
-            print(number, "is not a prime number")
-            break
-    else:
-        print(number, "is a prime number")
-else:
-    print(number, "is not a prime number")
-    
+//chat bot with json
+import json
+import random
+def load_responses():
+    with open('responses.json', 'r') as file:
+        return json.load(file)
+def chatbot_response(user_input, responses):
+    user_input = user_input.lower()
+    return random.choice(responses.get(user_input, ["I'm not sure how to respond to that."]))
+responses = load_responses()
+print("Simple Chatbot: Hello! Type 'bye' to exit.")
+while True:
+    user_input = input("You: ")
+    if user_input.lower() == 'bye':
+        print("Simple Chatbot: Goodbye!")
+        break
+    response = chatbot_response(user_input, responses)
+    print("Simple Chatbot:", response)
 
 
 
-# Python program to check if the number is an Armstrong number or not
-num = int(input("Enter a number: "))
-sum = 0
-temp = num
-while temp > 0:
-   digit = temp % 10
-   sum += digit ** 3
-   temp //= 10
-if num == sum:
-   print(num,"is an Armstrong number")
-else:
-   print(num,"is not an Armstrong number")
+
+1.	Write a python program to implement List operations (Nested List, Length, Concatenation, Membership, Iteration, Indexing and Slicing)?
+# Nested List
+nested_list = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+print("nested list = ",nested_list)
+# Length
+lan = len(nested_list)
+print("length of the list= ",lan)
+# Concatenation
+list1 = [1, 2, 3]
+list2 = [4, 5, 6]
+print("Concatenation =", list1 + list2)
+# Membership
+ele_present = 4 in list1
+print("Membership check= ",ele_present)
+# Iteration
+print("Iteration =")
+for item in list1:
+    print(item)
+# Indexing and Slicing
+element = list1[2]
+print("Indexing= ",element)
+sliced_list = list1[1:3]
+print("Slicing= ",sliced_list)
 
 
 
-#Count Number of Digits in an Integer using while loop
-num = 3452
-b=str(num)
-c=len(b)
-print(c)
+2.	Write a python program to implement List methods (Add, Append, Extend & Delete).
+# Add
+list1 = [1, 2, 3]
+list1[0] += 5
+# Append
+list1.append(4)
+# Extend
+list1.extend([5, 6, 7])
+# Delete
+del list1[2]
 
 
+3.	Write a python program to Check Whether a String is Palindrome or Not
+def is_palindrome(s):
+    s = s.lower()
+    return s == s[::-1]
+string_to_check = "level"
+result = is_palindrome(string_to_check)
+print(f"{string_to_check} is a palindrome: {result}")
+
+
+4.	Write a python program to Remove Punctuations from a String.
+import string
+def remove_punctuation(input_string):
+    return input_string.translate(str.maketrans("", "", string.punctuation))
+text_with_punctuation = "Hello, world! How are you?"
+cleaned_text = remove_punctuation(text_with_punctuation)
+print(f"Original: {text_with_punctuation}")
+print(f"Without Punctuation: {cleaned_text}")
+
+
+5.	Write a program in python to implement Depth-First Traversal
+# Assuming a graph represented as an adjacency list
+graph = {1: [2, 3], 2: [4, 5], 3: [6], 4: [], 5: [6], 6: []}
+def depth_first_traversal(node, visited):
+    if node not in visited:
+        print(node, end=" ")
+        visited.add(node)
+        for neighbor in graph[node]:
+            depth_first_traversal(neighbor, visited)
+visited_nodes = set()
+depth_first_traversal(1, visited_nodes)
+
+
+6.	Write a program in python to implement Breadth-First Traversal
+from collections import deque
+# Assuming a graph represented as an adjacency list
+graph = {1: [2, 3], 2: [4, 5], 3: [6], 4: [], 5: [6], 6: []}
+def breadth_first_traversal(start):
+    visited = set()
+    queue = deque([start])
+    while queue:
+        node = queue.popleft()
+        if node not in visited:
+            print(node, end=" ")
+            visited.add(node)
+            queue.extend(graph[node])
+breadth_first_traversal(1)
