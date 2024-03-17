@@ -95,20 +95,18 @@ chat()
 import json
 import random
 def load_responses():
-    with open('responses.json', 'r') as file:
+    with open('responses.json') as file:
         return json.load(file)
 def chatbot_response(user_input, responses):
-    user_input = user_input.lower()
-    return random.choice(responses.get(user_input, ["I'm not sure how to respond to that."]))
+    return random.choice(responses.get(user_input.lower(), ["I'm not sure how to respond to that."]))
 responses = load_responses()
 print("Simple Chatbot: Hello! Type 'bye' to exit.")
 while True:
-    user_input = input("You: ")
-    if user_input.lower() == 'bye':
+    user_input = input("You: ").lower()
+    if user_input == 'bye':
         print("Simple Chatbot: Goodbye!")
         break
-    response = chatbot_response(user_input, responses)
-    print("Simple Chatbot:", response)
+    print("Simple Chatbot:", chatbot_response(user_input, responses))
 
 
 
