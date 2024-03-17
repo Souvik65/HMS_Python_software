@@ -62,6 +62,35 @@ for num in range(lower, upper + 1):
 
 
 
+#simple chatbot
+def chat():
+    responses = {
+        "hi": "Hello!",
+        "hello": "Hi there!",
+        "how are you?": "I'm just a bot, but I'm doing fine. How about you?",
+        "what's your name?": "I'm just a bot, you can call me ChatBot!",
+        "bye": "Goodbye! Take care!",
+    }
+    print("Hello! I'm a simple chatbot.")
+    print("You can type 'bye' to exit the conversation.")
+    while True:
+        user_input = input("You: ").strip().lower()
+
+        if user_input == 'bye':
+            print("Bot: Goodbye!")
+            break
+        elif user_input in responses:
+            print("Bot:", responses[user_input])
+        else:
+            print("Bot: I'm just a simple bot and I didn't understand that. Can you please rephrase?")
+chat()
+
+
+
+
+
+
+
 //chat bot with json
 import json
 import random
