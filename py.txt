@@ -152,22 +152,37 @@ del list1[2]
 
 
 3.	Write a python program to Check Whether a String is Palindrome or Not
-def is_palindrome(s):
-    s = s.lower()
-    return s == s[::-1]
-string_to_check = "level"
-result = is_palindrome(string_to_check)
-print(f"{string_to_check} is a palindrome: {result}")
+def is_palindrome(input_string):
+    # Convert the input string to lowercase and remove spaces
+    input_string = input_string.lower().replace(" ", "")
+    # Check if the string is equal to its reverse
+    return input_string == input_string[::-1]
+input_string = input("Enter a string: ")
+if is_palindrome(input_string):
+    print("The string is a palindrome.")
+else:
+    print("The string is not a palindrome.")
+
+
+
 
 
 4.	Write a python program to Remove Punctuations from a String.
-import string
+
 def remove_punctuation(input_string):
-    return input_string.translate(str.maketrans("", "", string.punctuation))
-text_with_punctuation = "Hello, world! How are you?"
-cleaned_text = remove_punctuation(text_with_punctuation)
-print(f"Original: {text_with_punctuation}")
-print(f"Without Punctuation: {cleaned_text}")
+    punctuations = '''!()-[]{};:'"\,<>./?@#$%^&*_~'''
+    cleaned_string = ""
+    for char in input_string:
+        if char not in punctuations:
+            cleaned_string += char
+    return cleaned_string
+input_string = input("Enter a string with punctuations: ")
+cleaned_string = remove_punctuation(input_string)
+print("String without punctuations:", cleaned_string)
+
+
+
+
 
 
 5.	Write a program in python to implement Depth-First Traversal
