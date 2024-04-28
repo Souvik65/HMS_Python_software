@@ -1,3 +1,260 @@
+def tower_of_hanoi(n, source, auxiliary, target):
+    if n == 1:
+        print("Move disk 1 from", source, "to", target)
+        return
+    tower_of_hanoi(n-1, source, target, auxiliary)
+    print("Move disk", n, "from", source, "to", target)
+    tower_of_hanoi(n-1, auxiliary, source, target)
+num_disks = int(input("Enter the number of disks: "))
+source_peg = input("Enter the name of the source peg: ")
+auxiliary_peg = input("Enter the name of the auxiliary peg: ")
+target_peg = input("Enter the name of the target peg: ")
+
+tower_of_hanoi(num_disks, source_peg, auxiliary_peg, target_peg)
+
+
+
+
+#String is Palindrome or Not
+def is_palindrome(input_string):
+       input_string = input_string.lower().replace(" ", "")
+    return input_string == input_string[::-1]
+input_string = input("Enter a string: ")
+if is_palindrome(input_string):
+    print("The string is a palindrome.")
+else:
+    print("The string is not a palindrome.")
+
+
+
+
+
+#bfs dfs
+
+adj_list={'A':['C','D','B'],'B':['E','C'],'C':['D'],'D':['E'],'E':[]}
+visited=set()
+
+def dfs(visited,adj_list,root):
+    if root not in visited:
+        print(root)
+        visited.add(root)
+        for neighbour in adj_list[root]:
+            dfs(visited,adj_list,neighbour)
+
+def bfs(visited,adj_list, queue):
+    if queue:
+        node = queue.pop(0)
+        if node not in visited:
+            print(node)
+            visited.add(node)
+            for neighbour in adj_list[node]:
+                queue.append(neighbour)
+        bfs(visited,adj_list, queue)
+
+#bfs(visited, adj_list, ['A'])
+dfs(visited, adj_list, 'A')
+
+
+
+
+
+#water_jug_problem
+def water_jug_problem(cap1, cap2, target):
+    visited = set()
+    stack = [(0, 0, "Initial state")]
+    visited.add((0, 0))
+    steps = []
+
+    while stack:
+        j1, j2, step = stack.pop()
+        steps.append(step)
+
+        if j1 == target or j2 == target:
+            return True, steps
+
+        # Fill jug1
+        if (j1 < cap1) and ((cap1, j2) not in visited):
+            stack.append((cap1, j2, f"Fill Jug1: ({cap1},{j2})"))
+            visited.add((cap1, j2))
+
+        # Fill jug2
+        if (j2 < cap2) and ((j1, cap2) not in visited):
+            stack.append((j1, cap2, f"Fill Jug2: ({j1},{cap2})"))
+            visited.add((j1, cap2))
+
+        # Empty jug1
+        if (j1 > 0) and ((0, j2) not in visited):
+            stack.append((0, j2, f"Empty Jug1: (0,{j2})"))
+            visited.add((0, j2))
+
+        # Empty jug2
+        if (j2 > 0) and ((j1, 0) not in visited):
+            stack.append((j1, 0, f"Empty Jug2: ({j1},0)"))
+            visited.add((j1, 0))
+
+        # Pour from jug1 to jug2
+        pour_amt = min(j1, cap2 - j2)
+        if pour_amt > 0:
+            new_j1 = j1 - pour_amt
+            new_j2 = j2 + pour_amt
+            if (new_j1, new_j2) not in visited:
+                stack.append((new_j1, new_j2, f"Pour from Jug1 to Jug2: ({new_j1},{new_j2})"))
+                visited.add((new_j1, new_j2))
+
+        # Pour from jug2 to jug1
+        pour_amt = min(j2, cap1 - j1)
+        if pour_amt > 0:
+            new_j1 = j1 + pour_amt
+            new_j2 = j2 - pour_amt
+            if (new_j1, new_j2) not in visited:
+                stack.append((new_j1, new_j2, f"Pour from Jug2 to Jug1: ({new_j1},{new_j2})"))
+                visited.add((new_j1, new_j2))
+
+    return False, steps
+cap1 = int(input("Enter the capacity of Jug1: "))
+cap2 = int(input("Enter the capacity of Jug2: "))
+target = int(input("Enter the target amount of water: "))
+
+print("Steps to achieve the target amount of water:")
+found, steps = water_jug_problem(cap1, cap2, target)
+if found:
+    for i, step in enumerate(steps):
+        print(f"Step {i + 1}: {step}")
+else:
+    print("Target amount of water cannot be achieved.")
+
+
+
+
+
+
+#A*
+def aStarAlgo(start_node, stop_node):
+         
+        open_set = set(start_node) 
+        closed_set = set()
+        g = {} 
+        parents = {}
+        g[start_node] = 0
+        parents[start_node] = start_node
+         
+        while len(open_set) > 0:
+            n = None
+            for v in open_set:
+                if n == None or g[v] + heuristic(v) < g[n] + heuristic(n):
+                    n = v
+            if n == stop_node or Graph_nodes[n] == None:
+                pass
+            else:
+                for (m, weight) in get_neighbors(n):
+
+                    if m not in open_set and m not in closed_set:
+                        open_set.add(m)
+                        parents[m] = n
+                        g[m] = g[n] + weight
+
+                    else:
+                        if g[m] > g[n] + weight:
+                            g[m] = g[n] + weight
+                            parents[m] = n
+
+                            if m in closed_set:
+                                closed_set.remove(m)
+                                open_set.add(m)
+            if n == None:
+                print('Path does not exist!')
+                return None
+
+            if n == stop_node:
+                path = []
+                while parents[n] != n:
+                    path.append(n)
+                    n = parents[n]
+                path.append(start_node)
+                path.reverse()
+                print('Path found: {}'.format(path))
+                return path
+            open_set.remove(n)
+            closed_set.add(n)
+        print('Path does not exist!')
+        return None
+    
+def get_neighbors(v):
+    if v in Graph_nodes:
+        return Graph_nodes[v]
+    else:
+        return None
+
+def heuristic(n):
+        H_dist = {
+            'A': 11,
+            'B': 6,
+            'C': 99,
+            'D': 1,
+            'E': 7,
+            'G': 0,
+        }
+ 
+        return H_dist[n]
+ 
+Graph_nodes = {
+    'A': [('B', 2), ('E', 3)],
+    'B': [('C', 1),('G', 9)],
+    'C': None,
+    'E': [('D', 6)],
+    'D': [('G', 1)],
+}
+aStarAlgo('A', 'G')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Write a python program to check whether the given number is prime or not?
 num = 11
 # If given number is greater than 1
