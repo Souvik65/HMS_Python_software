@@ -1,3 +1,132 @@
+#----------------------------------- upperlower
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Form Object Example</title>
+    <script>
+        const setCase = caseSpec => {
+            document.querySelectorAll('form[name="form1"] input[type="text"]').forEach(input => {
+                input.value = caseSpec === 'upper' ? input.value.toUpperCase() : input.value.toLowerCase();
+            });
+        };
+    </script>
+</head>
+<body>
+    <form name="form1">
+        <b>First name:</b>
+        <input type="text" name="firstName" size="20"><br>
+        <b>Last name:</b>
+        <input type="text" name="lastName" size="20"><p>
+        <input type="button" value="Names to Uppercase" onclick="setCase('upper')">
+        <input type="button" value="Names to Lowercase" onclick="setCase('lower')">
+    </form>
+</body>
+</html>
+
+
+#----------------------------- word count
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    <textarea id="textInput" placeholder="Type here..."></textarea><br>
+    <button onclick="countWords()">Count</button>
+    <p id="result"></p>
+    <script>
+        function countWords() {
+            const text = document.getElementById('textInput').value;
+            const count = text.split(/\s+/).filter(word => word).length;
+            document.getElementById('result').textContent = 'Word Count: ' + count;
+        }
+    </script>
+</body>
+</html>
+
+
+
+#----------------------valid no
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    <label for="phoneInput">Phone Number:</label>
+    <input type="text" id="phoneInput" placeholder="Enter your phone number">
+    <button onclick="validatePhone()">Validate</button>
+
+    <p id="result"></p>
+    <script>
+        function validatePhone() {
+            const phone = document.getElementById('phoneInput').value;
+            const result = document.getElementById('result');
+            result.textContent = phone.match(/^\d{10}$/) ? 'Valid phone number!' : 'Invalid phone number. Please enter 10 digits.';
+        }
+    </script>
+</body>
+</html>
+
+
+
+#------------------------------------on submit
+<!DOCTYPE html>
+<html lang="en">
+
+<body>
+    <form id="myForm" onsubmit="handleSubmit(event)">
+        <label for="name">Name:</label>
+        <input type="text" id="name" required>
+        <button type="submit">Submit</button>
+    </form>
+    <script>
+        function handleSubmit(event) {
+            event.preventDefault(); // Prevent the form from refreshing the page
+            const name = document.getElementById('name').value; // Get the input value
+            alert('Hello' ); // Show an alert
+        }
+    </script>
+</body>
+</html>
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 def tower_of_hanoi(n, source, auxiliary, target):
     if n == 1:
         print("Move disk 1 from rod", source, "to rod", target)
