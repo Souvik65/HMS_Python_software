@@ -1,3 +1,473 @@
+//---------------------------------------------------traversal
+
+#include <stdio.h>
+
+void traverseArray(int arr[], int size) {
+    printf("Array elements: ");
+    for(int i = 0; i < size; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
+
+int main() {
+    int n;
+    printf("Enter the number of elements in the array: ");
+    scanf("%d", &n);
+
+    int arr[n];
+    printf("Enter the elements of the array:\n");
+    for(int i = 0; i < n; i++) {
+        scanf("%d", &arr[i]);
+    }
+
+    traverseArray(arr, n);
+    
+    return 0;
+}
+
+
+//----------------------------------array insertion at any specific position------------------------------------
+#include <stdio.h>
+
+void insertAtPosition(int arr[], int *size, int element, int position) {
+    for (int i = *size; i > position; i--) arr[i] = arr[i - 1];
+    arr[position] = element;
+    (*size)++;
+}
+
+void traverseArray(int arr[], int size) {
+    for (int i = 0; i < size; i++) printf("%d ", arr[i]);
+    printf("\n");
+}
+
+int main() {
+    int n, element, position;
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+    int arr[n + 1];
+    printf("Enter elements: ");
+    for (int i = 0; i < n; i++) scanf("%d", &arr[i]);
+    printf("Enter element to insert and position: ");
+    scanf("%d %d", &element, &position);
+    insertAtPosition(arr, &n, element, position);
+    traverseArray(arr, n);
+    return 0;
+}
+
+
+//------------------------array deletion at any specific position---------------------------
+
+#include <stdio.h>
+void deleteAtPosition(int arr[], int *size, int position) {
+    for (int i = position; i < *size - 1; i++) arr[i] = arr[i + 1];
+    (*size)--;
+}
+
+void traverseArray(int arr[], int size) {
+    for (int i = 0; i < size; i++) printf("%d ", arr[i]);
+    printf("\n");
+}
+
+int main() {
+    int n, position;
+    printf("Enter number of elements: ");
+    scanf("%d", &n);
+    int arr[n];
+    printf("Enter elements: ");
+    for (int i = 0; i < n; i++) scanf("%d", &arr[i]);
+    printf("Enter position to delete: ");
+    scanf("%d", &position);
+    deleteAtPosition(arr, &n, position);
+    traverseArray(arr, n);
+    return 0;
+}
+
+
+//--------------------------------------ingle linked list insertion at any perticular position----------------------------
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+void insertAtPosition(struct Node** head, int data, int position) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = data;
+    newNode->next = NULL;
+
+    if (position == 0) {
+        newNode->next = *head;
+        *head = newNode;
+        return;
+    }
+
+    struct Node* temp = *head;
+    for (int i = 0; temp != NULL && i < position - 1; i++) {
+        temp = temp->next;
+    }
+
+    if (temp == NULL) {
+        printf("Position out of bounds\n");
+        return;
+    }
+
+    newNode->next = temp->next;
+    temp->next = newNode;
+}
+
+void traverseList(struct Node* head) {
+    struct Node* temp = head;
+    while (temp != NULL) {
+        printf("%d -> ", temp->data);
+        temp = temp->next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    struct Node* head = NULL;
+    head = (struct Node*)malloc(sizeof(struct Node));
+    head->data = 1;
+    head->next = NULL;
+
+    int data, position, n;
+    printf("Enter number of nodes to insert: ");
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) {
+        printf("Enter data and position: ");
+        scanf("%d %d", &data, &position);
+        insertAtPosition(&head, data, position);
+    }
+
+    traverseList(head);
+
+    return 0;
+}
+
+
+
+//-------------------------------------------------single linked list deletion at any perticular position-------------------------
+
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+void deleteAtPosition(struct Node** head, int position) {
+    if (*head == NULL) return;
+
+    struct Node* temp = *head;
+
+    if (position == 0) {
+        *head = temp->next;
+        free(temp);
+        return;
+    }
+
+    for (int i = 0; temp != NULL && i < position - 1; i++) temp = temp->next;
+    if (temp == NULL || temp->next == NULL) return;
+
+    struct Node* next = temp->next->next;
+    free(temp->next);
+    temp->next = next;
+}
+void traverseList(struct Node* head) {
+    while (head != NULL) {
+        printf("%d -> ", head->data);
+        head = head->next;
+    }
+    printf("NULL\n");
+}
+
+void insertNode(struct Node** head, int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = data;
+    newNode->next = *head;
+    *head = newNode;
+}
+int main() {
+    struct Node* head = NULL;
+    int n, data, position;
+    printf("Enter number of nodes to insert: ");
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) {
+        printf("Enter data for node %d: ", i + 1);
+        scanf("%d", &data);
+        insertNode(&head, data);
+    }
+
+    printf("Enter the position to delete: ");
+    scanf("%d", &position);
+    deleteAtPosition(&head, position);
+    traverseList(head);
+    return 0;
+}
+
+
+
+
+// searching single linked list
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+void searchList(struct Node* head, int key) {
+    struct Node* current = head;
+    int position = 0;
+    while (current != NULL) {
+        if (current->data == key) {
+            printf("Element %d found at position %d\n", key, position);
+            return;
+        }
+        current = current->next;
+        position++;
+    }
+    printf("Element %d not found\n", key);
+}
+
+void traverseList(struct Node* head) {
+    while (head != NULL) {
+        printf("%d -> ", head->data);
+        head = head->next;
+    }
+    printf("NULL\n");
+}
+
+void insertNode(struct Node** head, int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = data;
+    newNode->next = *head;
+    *head = newNode;
+}
+
+int main() {
+    struct Node* head = NULL;
+    int n, data, key;
+    printf("Enter number of nodes to insert: ");
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) {
+        printf("Enter data for node %d: ", i + 1);
+        scanf("%d", &data);
+        insertNode(&head, data);
+    }
+
+    printf("Enter element to search: ");
+    scanf("%d", &key);
+    searchList(head, key);
+
+    traverseList(head);
+    return 0;
+}
+
+
+
+
+//double linked list insert at any perticular position
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* prev;
+    struct Node* next;
+};
+
+void insertAtPosition(struct Node** head, int data, int position) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = data;
+    newNode->prev = newNode->next = NULL;
+
+    if (position == 0) {
+        newNode->next = *head;
+        if (*head != NULL) (*head)->prev = newNode;
+        *head = newNode;
+        return;
+    }
+
+    struct Node* temp = *head;
+    for (int i = 0; temp != NULL && i < position - 1; i++) temp = temp->next;
+    if (temp == NULL) return;
+
+    newNode->next = temp->next;
+    newNode->prev = temp;
+    if (temp->next != NULL) temp->next->prev = newNode;
+    temp->next = newNode;
+}
+
+void traverseList(struct Node* head) {
+    while (head != NULL) {
+        printf("%d <-> ", head->data);
+        head = head->next;
+    }
+    printf("NULL\n");
+}
+
+int main() {
+    struct Node* head = NULL;
+    int data, position, n;
+    printf("Enter number of nodes to insert: ");
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) {
+        printf("Enter data and position: ");
+        scanf("%d %d", &data, &position);
+        insertAtPosition(&head, data, position);
+    }
+    traverseList(head);
+    return 0;
+}
+
+
+
+
+
+
+//delete at any certain position in double linked list
+#include <stdio.h>
+#include <stdlib.h>
+
+struct Node {
+    int data;
+    struct Node* prev;
+    struct Node* next;
+};
+
+void deleteAtPosition(struct Node** head, int position) {
+    if (*head == NULL) return;
+
+    struct Node* temp = *head;
+
+    if (position == 0) {
+        *head = temp->next;
+        if (*head != NULL) (*head)->prev = NULL;
+        free(temp);
+        return;
+    }
+
+    for (int i = 0; temp != NULL && i < position; i++) temp = temp->next;
+    if (temp == NULL) return;
+
+    if (temp->next != NULL) temp->next->prev = temp->prev;
+    if (temp->prev != NULL) temp->prev->next = temp->next;
+
+    free(temp);
+}
+
+void traverseList(struct Node* head) {
+    while (head != NULL) {
+        printf("%d <-> ", head->data);
+        head = head->next;
+    }
+    printf("NULL\n");
+}
+
+void insertNode(struct Node** head, int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = data;
+    newNode->next = *head;
+    newNode->prev = NULL;
+    if (*head != NULL) (*head)->prev = newNode;
+    *head = newNode;
+}
+
+int main() {
+    struct Node* head = NULL;
+    int n, data, position;
+    printf("Enter number of nodes to insert: ");
+    scanf("%d", &n);
+    for (int i = 0; i < n; i++) {
+        printf("Enter data for node %d: ", i + 1);
+        scanf("%d", &data);
+        insertNode(&head, data);
+    }
+
+    printf("Enter the position to delete: ");
+    scanf("%d", &position);
+    deleteAtPosition(&head, position);
+    traverseList(head);
+
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #----------------------------------- upperlower
 <!DOCTYPE html>
 <html lang="en">
