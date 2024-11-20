@@ -1,3 +1,416 @@
+//------------------------stack
+#include <stdio.h>
+#define MAX 10
+int stack[MAX] = {10, 20, 30, 40}, top = 3;
+void display() {
+    if (top == -1)
+        printf("Stack is empty.\n");
+    else {
+        printf("Current Stack: ");
+        for (int i = 0; i <= top; i++) printf("%d ", stack[i]);
+        printf("\n");
+    }
+}
+void push() {
+    if (top == MAX - 1)
+        printf("Stack Overflow! Cannot push.\n");
+    else {
+        int value;
+        printf("Enter value to push: ");
+        scanf("%d", &value);
+        stack[++top] = value;
+        printf("%d pushed into the stack.\n", value);
+        display();
+    }
+}
+void pop() {
+    if (top == -1)
+        printf("Stack Underflow! Cannot pop.\n");
+    else {
+        printf("%d popped from the stack.\n", stack[top--]);
+        display();
+    }
+}
+int main() {
+    int choice;
+    printf("Initial Stack:\n");
+    display();
+    while (1) {
+        printf("\n1. Push\n2. Pop\n3. Exit\nChoice: ");
+        scanf("%d", &choice);
+        if (choice == 1) push();
+        else if (choice == 2) pop();
+        else if (choice == 3) break;
+        else printf("Invalid choice! Try again.\n");
+    }
+    printf("Exiting program.\n");
+    return 0;
+}
+
+
+
+//-----------------------------------------Queue
+#include <stdio.h>
+#define MAX 10
+int queue[MAX] = {10, 20, 30, 40}, front = 0, rear = 3;
+void display() {
+    if (front > rear)
+        printf("Queue is empty.\n");
+    else {
+        printf("Current Queue: ");
+        for (int i = front; i <= rear; i++) printf("%d ", queue[i]);
+        printf("\n");
+    }
+}
+void enqueue() {
+    if (rear == MAX - 1)
+        printf("Queue Overflow! Cannot enqueue.\n");
+    else {
+        int value;
+        printf("Enter value to enqueue: ");
+        scanf("%d", &value);
+        queue[++rear] = value;
+        printf("%d enqueued into the queue.\n", value);
+        display();
+    }
+}
+void dequeue() {
+    if (front > rear)
+        printf("Queue Underflow! Cannot dequeue.\n");
+    else {
+        printf("%d dequeued from the queue.\n", queue[front++]);
+        display();
+    }
+}
+int main() {
+    int choice;
+    printf("Initial Queue:\n");
+    display();
+    while (1) {
+        printf("\n1. Enqueue\n2. Dequeue\n3. Exit\nChoice: ");
+        scanf("%d", &choice);
+        if (choice == 1) enqueue();
+        else if (choice == 2) dequeue();
+        else if (choice == 3) break;
+        else printf("Invalid choice! Try again.\n");
+    }
+    printf("Exiting program.\n");
+    return 0;
+}
+
+
+
+
+
+
+//--------------------------------------single linked list insertion at any perticular position----------------------------
+#include <stdio.h>
+#include <stdlib.h>
+
+// Node structure
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+// Function to create a new node
+struct Node* createNode(int value) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+    newNode->next = NULL;
+    return newNode;
+}
+
+// Function to display the linked list
+void display(struct Node* head) {
+    printf("Linked list: ");
+    while (head) {
+        printf("%d -> ", head->data);
+        head = head->next;
+    }
+    printf("NULL\n");
+}
+
+// Function to insert a node at a specific position
+void insertAtPosition(struct Node** head, int value, int position) {
+    struct Node* newNode = createNode(value);
+    if (position == 1) {
+        newNode->next = *head;
+        *head = newNode;
+    } else {
+        struct Node* temp = *head;
+        for (int i = 1; i < position - 1 && temp; i++)
+            temp = temp->next;
+        if (!temp) { printf("Invalid position!\n"); free(newNode); return; }
+        newNode->next = temp->next;
+        temp->next = newNode;
+    }
+    printf("Inserted %d at position %d.\n", value, position);
+}
+// Main function
+int main() {
+    // Predefined linked list
+    struct Node *head = createNode(10);
+    head->next = createNode(20);
+    head->next->next = createNode(30);
+    head->next->next->next = createNode(40);
+
+    int choice, value, position;
+    display(head);
+
+    while (1) {
+        printf("\n1. Insert at position\n2. Exit\nChoice: ");
+        scanf("%d", &choice);
+        if (choice == 1) {
+            printf("Enter value and position: ");
+            scanf("%d %d", &value, &position);
+            insertAtPosition(&head, value, position);
+            display(head);
+        }else if (choice == 2)
+            break;
+        else
+            printf("Invalid choice! Try again.\n");
+    }
+    return 0;
+}
+
+
+//-------------------------------------------------single linked list deletion at any perticular position-------------------------
+
+#include <stdio.h>
+#include <stdlib.h>
+
+// Node structure
+struct Node {
+    int data;
+    struct Node* next;
+};
+
+// Function to create a new node
+struct Node* createNode(int value) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+    newNode->next = NULL;
+    return newNode;
+}
+
+// Function to display the linked list
+void display(struct Node* head) {
+    printf("Linked list: ");
+    while (head) {
+        printf("%d -> ", head->data);
+        head = head->next;
+    }
+    printf("NULL\n");
+}
+
+// Function to delete a node at a specific position
+void deleteAtPosition(struct Node** head, int position) {
+    if (!*head) {
+        printf("List is empty!\n");
+        return;
+    }
+    struct Node* temp = *head;
+
+    // If the head is to be deleted
+    if (position == 1) {
+        *head = temp->next;
+        printf("Deleted %d from position %d.\n", temp->data, position);
+        free(temp);
+        return;
+    }
+
+    // Traverse to the (position-1)th node
+    for (int i = 1; i < position - 1 && temp; i++)
+        temp = temp->next;
+
+    // If position is invalid
+    if (!temp || !temp->next) {
+        printf("Invalid position!\n");
+        return;
+    }
+
+    // Delete the node at the desired position
+    struct Node* nodeToDelete = temp->next;
+    temp->next = nodeToDelete->next;
+    printf("Deleted %d from position %d.\n", nodeToDelete->data, position);
+    free(nodeToDelete);
+}
+
+// Main function
+int main() {
+    // Predefined linked list
+    struct Node *head = createNode(10);
+    head->next = createNode(20);
+    head->next->next = createNode(30);
+    head->next->next->next = createNode(40);
+
+    int choice, position;
+    display(head);
+
+    while (1) {
+        printf("\n1. Delete at position\n2. Exit\nChoice: ");
+        scanf("%d", &choice);
+        if (choice == 1) {
+            printf("Enter position: ");
+            scanf("%d", &position);
+            deleteAtPosition(&head, position);
+            display(head);
+        }
+        else if (choice == 3)
+            break;
+        else
+            printf("Invalid choice! Try again.\n");
+    }
+    return 0;
+}
+
+
+
+
+
+
+//-----------------------------------------------------------------------double linked list insert and delete at any perticular position
+#include <stdio.h>
+#include <stdlib.h>
+
+// Node structure
+struct Node {
+    int data;
+    struct Node* prev;
+    struct Node* next;
+};
+
+// Function to create a new node
+struct Node* createNode(int value) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = value;
+    newNode->prev = newNode->next = NULL;
+    return newNode;
+}
+
+// Function to display the doubly linked list
+void display(struct Node* head) {
+    printf("Doubly linked list: ");
+    while (head) {
+        printf("%d <-> ", head->data);
+        head = head->next;
+    }
+    printf("NULL\n");
+}
+
+// Function to insert at a specific position
+void insertAtPosition(struct Node** head, int value, int position) {
+    struct Node* newNode = createNode(value);
+    if (position == 1) { // Insert at head
+        newNode->next = *head;
+        if (*head) (*head)->prev = newNode;
+        *head = newNode;
+    } else {
+        struct Node* temp = *head;
+        for (int i = 1; i < position - 1 && temp; i++)
+            temp = temp->next;
+        if (!temp) return printf("Invalid position!\n"), free(newNode), void();
+        newNode->next = temp->next;
+        if (temp->next) temp->next->prev = newNode;
+        temp->next = newNode;
+        newNode->prev = temp;
+    }
+    printf("Inserted %d at position %d.\n", value, position);
+}
+
+// Function to delete at a specific position
+void deleteAtPosition(struct Node** head, int position) {
+    if (!*head) return printf("List is empty!\n"), void();
+    struct Node* temp = *head;
+
+    if (position == 1) { // Delete head
+        *head = temp->next;
+        if (*head) (*head)->prev = NULL;
+    } else {
+        for (int i = 1; i < position && temp; i++)
+            temp = temp->next;
+        if (!temp) return printf("Invalid position!\n"), void();
+        if (temp->next) temp->next->prev = temp->prev;
+        if (temp->prev) temp->prev->next = temp->next;
+    }
+    printf("Deleted %d from position %d.\n", temp->data, position);
+    free(temp);
+}
+
+// Main function
+int main() {
+    // Predefined doubly linked list
+    struct Node *head = createNode(10), *node2 = createNode(20);
+    struct Node *node3 = createNode(30), *node4 = createNode(40);
+    head->next = node2, node2->prev = head;
+    node2->next = node3, node3->prev = node2;
+    node3->next = node4, node4->prev = node3;
+
+    int choice, value, position;
+    display(head);
+
+    while (1) {
+        printf("\n1. Insert at position\n2. Delete at position\n3. Display\n4. Exit\nChoice: ");
+        scanf("%d", &choice);
+        if (choice == 1) {
+            printf("Enter value and position: ");
+            scanf("%d %d", &value, &position);
+            insertAtPosition(&head, value, position);
+            display(head);
+        } else if (choice == 2) {
+            printf("Enter position: ");
+            scanf("%d", &position);
+            deleteAtPosition(&head, position);
+            display(head);
+        } else if (choice == 3)
+            display(head);
+        else if (choice == 4)
+            break;
+        else
+            printf("Invalid choice! Try again.\n");
+    }
+    return 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #-------------------------------php
  <?php
 $conn = new mysqli('localhost', 'root', '', 'user_registration') or die("Connection failed: " . $conn->connect_error);
@@ -63,19 +476,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   </form>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -317,130 +717,7 @@ int main() {
 }
 
 
-//--------------------------------------ingle linked list insertion at any perticular position----------------------------
-#include <stdio.h>
-#include <stdlib.h>
 
-struct Node {
-    int data;
-    struct Node* next;
-};
-
-void insertAtPosition(struct Node** head, int data, int position) {
-    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
-    newNode->data = data;
-    newNode->next = NULL;
-
-    if (position == 0) {
-        newNode->next = *head;
-        *head = newNode;
-        return;
-    }
-
-    struct Node* temp = *head;
-    for (int i = 0; temp != NULL && i < position - 1; i++) {
-        temp = temp->next;
-    }
-
-    if (temp == NULL) {
-        printf("Position out of bounds\n");
-        return;
-    }
-
-    newNode->next = temp->next;
-    temp->next = newNode;
-}
-
-void traverseList(struct Node* head) {
-    struct Node* temp = head;
-    while (temp != NULL) {
-        printf("%d -> ", temp->data);
-        temp = temp->next;
-    }
-    printf("NULL\n");
-}
-
-int main() {
-    struct Node* head = NULL;
-    head = (struct Node*)malloc(sizeof(struct Node));
-    head->data = 1;
-    head->next = NULL;
-
-    int data, position, n;
-    printf("Enter number of nodes to insert: ");
-    scanf("%d", &n);
-    for (int i = 0; i < n; i++) {
-        printf("Enter data and position: ");
-        scanf("%d %d", &data, &position);
-        insertAtPosition(&head, data, position);
-    }
-
-    traverseList(head);
-
-    return 0;
-}
-
-
-
-//-------------------------------------------------single linked list deletion at any perticular position-------------------------
-
-#include <stdio.h>
-#include <stdlib.h>
-
-struct Node {
-    int data;
-    struct Node* next;
-};
-
-void deleteAtPosition(struct Node** head, int position) {
-    if (*head == NULL) return;
-
-    struct Node* temp = *head;
-
-    if (position == 0) {
-        *head = temp->next;
-        free(temp);
-        return;
-    }
-
-    for (int i = 0; temp != NULL && i < position - 1; i++) temp = temp->next;
-    if (temp == NULL || temp->next == NULL) return;
-
-    struct Node* next = temp->next->next;
-    free(temp->next);
-    temp->next = next;
-}
-void traverseList(struct Node* head) {
-    while (head != NULL) {
-        printf("%d -> ", head->data);
-        head = head->next;
-    }
-    printf("NULL\n");
-}
-
-void insertNode(struct Node** head, int data) {
-    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
-    newNode->data = data;
-    newNode->next = *head;
-    *head = newNode;
-}
-int main() {
-    struct Node* head = NULL;
-    int n, data, position;
-    printf("Enter number of nodes to insert: ");
-    scanf("%d", &n);
-    for (int i = 0; i < n; i++) {
-        printf("Enter data for node %d: ", i + 1);
-        scanf("%d", &data);
-        insertNode(&head, data);
-    }
-
-    printf("Enter the position to delete: ");
-    scanf("%d", &position);
-    deleteAtPosition(&head, position);
-    traverseList(head);
-    return 0;
-}
 
 
 
@@ -505,131 +782,6 @@ int main() {
 
 
 
-//double linked list insert at any perticular position
-#include <stdio.h>
-#include <stdlib.h>
-
-struct Node {
-    int data;
-    struct Node* prev;
-    struct Node* next;
-};
-
-void insertAtPosition(struct Node** head, int data, int position) {
-    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
-    newNode->data = data;
-    newNode->prev = newNode->next = NULL;
-
-    if (position == 0) {
-        newNode->next = *head;
-        if (*head != NULL) (*head)->prev = newNode;
-        *head = newNode;
-        return;
-    }
-
-    struct Node* temp = *head;
-    for (int i = 0; temp != NULL && i < position - 1; i++) temp = temp->next;
-    if (temp == NULL) return;
-
-    newNode->next = temp->next;
-    newNode->prev = temp;
-    if (temp->next != NULL) temp->next->prev = newNode;
-    temp->next = newNode;
-}
-
-void traverseList(struct Node* head) {
-    while (head != NULL) {
-        printf("%d <-> ", head->data);
-        head = head->next;
-    }
-    printf("NULL\n");
-}
-
-int main() {
-    struct Node* head = NULL;
-    int data, position, n;
-    printf("Enter number of nodes to insert: ");
-    scanf("%d", &n);
-    for (int i = 0; i < n; i++) {
-        printf("Enter data and position: ");
-        scanf("%d %d", &data, &position);
-        insertAtPosition(&head, data, position);
-    }
-    traverseList(head);
-    return 0;
-}
-
-
-
-
-
-
-//delete at any certain position in double linked list
-#include <stdio.h>
-#include <stdlib.h>
-
-struct Node {
-    int data;
-    struct Node* prev;
-    struct Node* next;
-};
-
-void deleteAtPosition(struct Node** head, int position) {
-    if (*head == NULL) return;
-
-    struct Node* temp = *head;
-
-    if (position == 0) {
-        *head = temp->next;
-        if (*head != NULL) (*head)->prev = NULL;
-        free(temp);
-        return;
-    }
-
-    for (int i = 0; temp != NULL && i < position; i++) temp = temp->next;
-    if (temp == NULL) return;
-
-    if (temp->next != NULL) temp->next->prev = temp->prev;
-    if (temp->prev != NULL) temp->prev->next = temp->next;
-
-    free(temp);
-}
-
-void traverseList(struct Node* head) {
-    while (head != NULL) {
-        printf("%d <-> ", head->data);
-        head = head->next;
-    }
-    printf("NULL\n");
-}
-
-void insertNode(struct Node** head, int data) {
-    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
-    newNode->data = data;
-    newNode->next = *head;
-    newNode->prev = NULL;
-    if (*head != NULL) (*head)->prev = newNode;
-    *head = newNode;
-}
-
-int main() {
-    struct Node* head = NULL;
-    int n, data, position;
-    printf("Enter number of nodes to insert: ");
-    scanf("%d", &n);
-    for (int i = 0; i < n; i++) {
-        printf("Enter data for node %d: ", i + 1);
-        scanf("%d", &data);
-        insertNode(&head, data);
-    }
-
-    printf("Enter the position to delete: ");
-    scanf("%d", &position);
-    deleteAtPosition(&head, position);
-    traverseList(head);
-
-    return 0;
-}
 
 
 
