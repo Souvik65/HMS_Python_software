@@ -29,6 +29,57 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
 
+
+
+# UpperLowerConversion
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Form Object Example</title>
+  <script>
+    function setCase(caseSpec) {
+      const firstName = document.form1.firstName;
+      const lastName = document.form1.lastName;
+      
+      if (caseSpec === 'upper') {
+        firstName.value = firstName.value.toUpperCase();
+        lastName.value = lastName.value.toUpperCase();
+      } else {
+        firstName.value = firstName.value.toLowerCase();
+        lastName.value = lastName.value.toLowerCase();
+      }
+    }
+  </script>
+</head>
+<body>
+  <form name="form1">
+    <b>First name:</b>
+    <input type="text" name="firstName" size="20"><br>
+    <b>Last name:</b>
+    <input type="text" name="lastName" size="20"><p>
+    <input type="button" value="Names to Uppercase" onclick="setCase('upper')">
+    <input type="button" value="Names to Lowercase" onclick="setCase('lower')">
+  </form>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #---------------------------------------------xml
 
 <?xml version="1.0" encoding="UTF-8"?> 
