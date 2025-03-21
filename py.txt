@@ -1,3 +1,103 @@
+exp 1--------
+data("longley")
+force("longley")
+attributes("longley")
+str("longley")
+class("longley")
+tail("longley")
+names("longley")
+longley[1:5]
+dim()
+head()
+
+
+exp 2----------
+> var_1 = c(0,1,2,3)
+> print(var_1)
+> var_2 =c("learn","r")
+> print(var_2)
+> c(TRUE,1)->var_3
+> print(var_3)
+ls()
+> v=c(2,5,6)
+> t=c(8,3,4)
+> print(v+t)
+> print(v_t)
+> print(v*t)
+> print(v^t)
+
+
+exp 3-----------
+ploting:
+> x<-c(1,2,3,4,5)
+> y<-c(3,7,8,9,12)
+> plot(x,y)
+point with labels:
+> plot(1:10,main="my graph",xlab = "the x-axis",ylab="the y axis")
+multiple lines:
+ line1<-c(1,2,3,4,5,10)
+> line2<-c(2,5,7,8,10)
+> plot(line1,type = "l",col="blue")
+> lines(line2,type="l",col="red")
+
+scatter plots:
+> x<- c(1,2,3,4,5)
+> y<- c(2,5,6,9,2)
+> print(x,y)
+
+compare plots:
+> x1<-c (5,7,8,7,2,2,9,4,11,12)
+> y1<-c(99,86,87,88,111,103,87,94,78)
+> x2<-c(2,2,8,1,15,8,9,7,3,11)
+> y2<-c(100,105,84,105,90,99,90,95,94,100)
+> plot(x1,y1,main="observation of cars",xlab = "car age", ylab = "car speed",col="red", cex=2)
+
+
+pie chart
+> x<-c(10,20,30,40)
+> mylable<-c("a","b","c","d")
+> colors<-c("blue","yellow","green","black")
+> pie(x,label=mylable,main="fruits",col=colors)
+
+bar chart
+> x<-c("A","b","c","d")
+> y<-c(2,4,6,8)
+> barplot(y,names.arg = x,density = 10)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //------------------------stack
 #include <stdio.h>
 #define MAX 10
