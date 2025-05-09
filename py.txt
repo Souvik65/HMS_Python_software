@@ -1,3 +1,17 @@
+Q6 statistical operation
+x=c (12,23,25,23,28)
+mean(x)
+max(x)
+length(x)
+x[6]=30
+length(x)
+var(x)
+sqrt(var(x))
+sd(x)
+
+
+
+
 exp 1--------
 data("longley")
 force("longley")
