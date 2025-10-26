@@ -1,3 +1,141 @@
+
+1. prime number checker
+a= int(input("enter a number"))
+for i in range(2, a):
+    if  a%i==0:
+        print("not prime")
+        break
+else:
+    print("prime")
+
+
+2. fibonacci series
+n = int(input("Enter number of terms: "))
+a, b = 0, 1
+for _ in range(n):
+    print(a, end=" ")
+    a, b = b, a + b
+
+
+3.pal
+n = input("Enter a number: ")
+print("Palindrome" if n == n[::-1] else "Not Palindrome")
+
+
+
+
+4.sum of n number
+a=int(input("Enter a number"))
+i=1
+sum =0
+while i<=a:
+    sum+=i
+    i+=1
+print(sum)
+
+5. fact
+def factorial(n):
+    if n==0 or n==1:
+        return 1
+    return n*factorial(n-1)
+
+n=int(input("enter "))
+print(factorial(n))
+
+
+
+6. Armstrong Number
+def is_armstrong(num):
+    temp = num
+    digits = len(str(num))
+    sum_ = 0
+    while temp > 0:
+        digit = temp % 10
+        sum_ += digit ** digits
+        temp //= 10
+    return num == sum_
+
+7. Palindrome
+def is_palindrome(s):
+    s = str(s)
+    return s == s[::-1]
+
+8. equi triangle pattern
+n=int(input("enter a number "))
+for i in range(1, n+1):
+    print(" "*(n-i), end="")
+    print("*"*(2*i-1), end="")
+    print("")
+
+
+9. left another triangle pattern                                           
+n=int(input("enter a number "))
+for i in range(1, n+1):
+    print("*"*i, end ="")
+    print("")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Q6 statistical operation
 x=c (12,23,25,23,28)
 mean(x)
@@ -486,42 +624,6 @@ int main() {
     }
     return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1107,109 +1209,6 @@ int main() {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 def tower_of_hanoi(n, source, auxiliary, target):
     if n == 1:
         print("Move disk 1 from rod", source, "to rod", target)
@@ -1223,10 +1222,6 @@ auxiliary_peg = input("Enter the name of the auxiliary peg: ")
 target_peg = input("Enter the name of the target peg: ")
 
 tower_of_hanoi(num_disks, source_peg, auxiliary_peg, target_peg)
-
-
-
-
 
 
 #String is Palindrome or Not
@@ -1267,8 +1262,6 @@ def bfs(visited,adj_list, queue):
 
 #bfs(visited, adj_list, ['A'])
 dfs(visited, adj_list, 'A')
-
-
 
 
 
@@ -1336,10 +1329,6 @@ if found:
         print(f"Step {i + 1}: {step}")
 else:
     print("Target amount of water cannot be achieved.")
-
-
-
-
 
 
 
@@ -1416,23 +1405,6 @@ while (True):
     x ,y = apply_rule(ch,x,y)
     print("====================State====================")
     print("Current State: ",x,y)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1513,45 +1485,6 @@ Graph_nodes = {
     'D': [('G', 1)],
 }
 aStarAlgo('A', 'G')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1649,9 +1582,6 @@ def chat():
         else:
             print("Bot: I'm just a simple bot and I didn't understand that. Can you please rephrase?")
 chat()
-
-
-
 
 
 
@@ -1775,3 +1705,4 @@ def breadth_first_traversal(start):
             visited.add(node)
             queue.extend(graph[node])
 breadth_first_traversal(1)
+
