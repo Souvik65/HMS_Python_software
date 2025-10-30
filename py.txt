@@ -1,4 +1,112 @@
 
+
+def caesar_cipher(text, shift):
+    result = ""
+    for char in text:
+        if char.isalpha():  # Check if it's a letter
+            start = ord('A') if char.isupper() else ord('a')
+            result += chr((ord(char) - start + shift) % 26 + start)
+        else:
+            result += char  # Keep spaces, punctuation, etc. as is
+    return result
+
+# Input from user
+text = input("Enter your text: ")
+shift = int(input("Enter shift value: "))
+
+encrypted = caesar_cipher(text, shift)
+print("Encrypted text:", encrypted)
+
+# To decrypt
+decrypted = caesar_cipher(encrypted, -shift)
+print("Decrypted text:", decrypted)
+
+
+
+
+import string
+
+def substitution_cipher_encrypt(plaintext, key):
+    alphabet = string.ascii_lowercase
+    mapping = {alphabet[i]: key[i] for i in range(26)}
+    ciphertext = ""
+    for char in plaintext.lower():
+        if char in mapping:
+            ciphertext += mapping[char]
+        else:
+            ciphertext += char
+    return ciphertext
+
+def substitution_cipher_decrypt(ciphertext, key):
+    alphabet = string.ascii_lowercase
+    reverse_mapping = {key[i]: alphabet[i] for i in range(26)}
+    plaintext = ""
+    for char in ciphertext.lower():
+        if char in reverse_mapping:
+            plaintext += reverse_mapping[char]
+        else:
+            plaintext += char
+    return plaintext
+
+# Example usage
+plaintext = input("Enter plaintext: ")
+key = "phqgiumeaylnofdxjkrcvstzwb"
+
+if len(key) != 26 or len(set(key)) != 26:
+    print("Invalid key! It must contain 26 unique letters.")
+else:
+    encrypted = substitution_cipher_encrypt(plaintext, key)
+    print("Encrypted text:", encrypted)
+    
+    decrypted = substitution_cipher_decrypt(encrypted, key)
+    print("Decrypted text:", decrypted)
+
+
+
+
+
+
+
+
+def xor_cipher(text, key):
+    result = ""
+    for i in range(len(text)):
+        # XOR each character with key (cycled)
+        result += chr(ord(text[i]) ^ ord(key[i % len(key)]))
+    return result
+
+# Input from user
+plaintext = input("Enter your text: ")
+key = input("Enter key: ")
+
+# Encrypt
+ciphertext = xor_cipher(plaintext, key)
+print("Encrypted (raw):", ciphertext)
+print("Encrypted (hex):", ciphertext.encode().hex())
+
+# Decrypt (same function, XOR is reversible)
+decrypted = xor_cipher(ciphertext, key)
+print("Decrypted:", decrypted)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 1. prime number checker
 a= int(input("enter a number"))
 for i in range(2, a):
@@ -1705,4 +1813,5 @@ def breadth_first_traversal(start):
             visited.add(node)
             queue.extend(graph[node])
 breadth_first_traversal(1)
+
 
