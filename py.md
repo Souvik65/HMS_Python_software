@@ -1,6 +1,10 @@
 
-# **1. Bubble Sort**
 
+# **Sorting & Searching Algorithms in Python**
+
+## **1. Bubble Sort**
+
+```python
 def bubble_sort(arr):
     n = len(arr)
     for i in range(n - 1):
@@ -10,14 +14,13 @@ def bubble_sort(arr):
     return arr
 
 print(bubble_sort([5, 2, 8, 3, 1]))
+```
 
+---
 
+## **2. Insertion Sort**
 
-
-
-
-# **2. Insertion Sort**
-
+```python
 def insertion_sort(arr):
     for i in range(1, len(arr)):
         key = arr[i]
@@ -27,17 +30,15 @@ def insertion_sort(arr):
             j -= 1
         arr[j + 1] = key
     return arr
+
 print(insertion_sort([5, 2, 8, 3, 1]))
+```
 
+---
 
+## **3. Selection Sort**
 
-
-
-
-
-
-# **3. Selection Sort**
-
+```python
 def selection_sort(arr):
     n = len(arr)
     for i in range(n):
@@ -47,16 +48,15 @@ def selection_sort(arr):
                 min_index = j
         arr[i], arr[min_index] = arr[min_index], arr[i]
     return arr
+
 print(selection_sort([5, 2, 8, 3, 1]))
+```
 
+---
 
+## **4. Multilevel Inheritance**
 
-
-
-
-
-# **4. Multilevel Inheritance**
-
+```python
 class A:
     def showA(self):
         print("This is A")
@@ -73,14 +73,13 @@ obj = C()
 obj.showA()
 obj.showB()
 obj.showC()
+```
 
+---
 
+## **5. Multiple Inheritance**
 
-
-
-
-# **5. Multiple Inheritance**
-
+```python
 class A:
     def showA(self):
         print("This is A")
@@ -97,13 +96,13 @@ obj = C()
 obj.showA()
 obj.showB()
 obj.showC()
+```
 
+---
 
+## **6. Binary Search (Recursive)**
 
-
-
-# **6. Binary Search**
-
+```python
 def binary_search(arr, low, high, target):
     if low > high:
         return -1
@@ -118,5 +117,5 @@ def binary_search(arr, low, high, target):
 nums = [1, 3, 5, 7, 9, 11]
 index = binary_search(nums, 0, len(nums) - 1, 7)
 print(index)
-
+```
 
