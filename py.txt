@@ -1,3 +1,174 @@
+#caesar cipher
+def caesar_cipher(text, shift):
+    result = ""
+    for char in text:
+        if char.isalpha():  # Check if it's a letter
+            start = ord('A') if char.isupper() else ord('a')
+            result += chr((ord(char) - start + shift) % 26 + start)
+        else:
+            result += char  # Keep spaces, punctuation, etc. as is
+    return result
+
+# Input from user
+text = input("Enter your text: ")
+shift = int(input("Enter shift value: "))
+
+encrypted = caesar_cipher(text, shift)
+print("Encrypted text:", encrypted)
+
+# To decrypt
+decrypted = caesar_cipher(encrypted, -shift)
+print("Decrypted text:", decrypted)
+
+
+
+
+#substitution cipher
+import string
+def substitution_cipher_encrypt(plaintext, key):
+    alphabet = string.ascii_lowercase
+    mapping = {alphabet[i]: key[i] for i in range(26)}
+    ciphertext = ""
+    for char in plaintext.lower():
+        if char in mapping:
+            ciphertext += mapping[char]
+        else:
+            ciphertext += char
+    return ciphertext
+
+def substitution_cipher_decrypt(ciphertext, key):
+    alphabet = string.ascii_lowercase
+    reverse_mapping = {key[i]: alphabet[i] for i in range(26)}
+    plaintext = ""
+    for char in ciphertext.lower():
+        if char in reverse_mapping:
+            plaintext += reverse_mapping[char]
+        else:
+            plaintext += char
+    return plaintext
+
+# Example usage
+plaintext = input("Enter plaintext: ")
+key = "phqgiumeaylnofdxjkrcvstzwb"
+
+if len(key) != 26 or len(set(key)) != 26:
+    print("Invalid key! It must contain 26 unique letters.")
+else:
+    encrypted = substitution_cipher_encrypt(plaintext, key)
+    print("Encrypted text:", encrypted)
+    
+    decrypted = substitution_cipher_decrypt(encrypted, key)
+    print("Decrypted text:", decrypted)
+
+
+
+
+
+
+#xor cipher
+def xor_cipher(text, key):
+    result = ""
+    for i in range(len(text)):
+        # XOR each character with key (cycled)
+        result += chr(ord(text[i]) ^ ord(key[i % len(key)]))
+    return result
+
+# Input from user
+plaintext = input("Enter your text: ")
+key = input("Enter key: ")
+
+# Encrypt
+ciphertext = xor_cipher(plaintext, key)
+print("Encrypted (raw):", ciphertext)
+print("Encrypted (hex):", ciphertext.encode().hex())
+
+# Decrypt (same function, XOR is reversible)
+decrypted = xor_cipher(ciphertext, key)
+print("Decrypted:", decrypted)
+
+
+
+
+
+
+
+
+
+#DES
+from Crypto.Cipher import DES
+import binascii
+
+def pad(text):
+    # DES requires data to be a multiple of 8 bytes
+    while len(text) % 8 != 0:
+        text += ' '
+    return text
+
+def des_encrypt(key, plaintext):
+    key = key.encode('utf-8')
+    cipher = DES.new(key, DES.MODE_ECB)
+
+    padded_text = pad(plaintext)
+    encrypted_text = cipher.encrypt(padded_text.encode('utf-8'))
+    return binascii.hexlify(encrypted_text).decode('utf-8')
+
+def des_decrypt(key, encrypted_hex):
+    key = key.encode('utf-8')
+    cipher = DES.new(key, DES.MODE_ECB)
+
+    encrypted_bytes = binascii.unhexlify(encrypted_hex)
+    decrypted_text = cipher.decrypt(encrypted_bytes)
+    return decrypted_text.decode('utf-8').rstrip()
+
+if __name__ == "__main__":
+    key = "abcdefgh"     # 8-byte DES key
+    plaintext = "Hello DES Example"
+
+    print("Original Text:", plaintext)
+
+    encrypted = des_encrypt(key, plaintext)
+    print("Encrypted Hex:", encrypted)
+
+    decrypted = des_decrypt(key, encrypted)
+    print("Decrypted Text:", decrypted)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # **1. Bubble Sort**
 
@@ -118,152 +289,6 @@ def binary_search(arr, low, high, target):
 nums = [1, 3, 5, 7, 9, 11]
 index = binary_search(nums, 0, len(nums) - 1, 7)
 print(index)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-def caesar_cipher(text, shift):
-    result = ""
-    for char in text:
-        if char.isalpha():  # Check if it's a letter
-            start = ord('A') if char.isupper() else ord('a')
-            result += chr((ord(char) - start + shift) % 26 + start)
-        else:
-            result += char  # Keep spaces, punctuation, etc. as is
-    return result
-
-# Input from user
-text = input("Enter your text: ")
-shift = int(input("Enter shift value: "))
-
-encrypted = caesar_cipher(text, shift)
-print("Encrypted text:", encrypted)
-
-# To decrypt
-decrypted = caesar_cipher(encrypted, -shift)
-print("Decrypted text:", decrypted)
-
-
-
-
-import string
-
-def substitution_cipher_encrypt(plaintext, key):
-    alphabet = string.ascii_lowercase
-    mapping = {alphabet[i]: key[i] for i in range(26)}
-    ciphertext = ""
-    for char in plaintext.lower():
-        if char in mapping:
-            ciphertext += mapping[char]
-        else:
-            ciphertext += char
-    return ciphertext
-
-def substitution_cipher_decrypt(ciphertext, key):
-    alphabet = string.ascii_lowercase
-    reverse_mapping = {key[i]: alphabet[i] for i in range(26)}
-    plaintext = ""
-    for char in ciphertext.lower():
-        if char in reverse_mapping:
-            plaintext += reverse_mapping[char]
-        else:
-            plaintext += char
-    return plaintext
-
-# Example usage
-plaintext = input("Enter plaintext: ")
-key = "phqgiumeaylnofdxjkrcvstzwb"
-
-if len(key) != 26 or len(set(key)) != 26:
-    print("Invalid key! It must contain 26 unique letters.")
-else:
-    encrypted = substitution_cipher_encrypt(plaintext, key)
-    print("Encrypted text:", encrypted)
-    
-    decrypted = substitution_cipher_decrypt(encrypted, key)
-    print("Decrypted text:", decrypted)
-
-
-
-
-
-
-
-
-def xor_cipher(text, key):
-    result = ""
-    for i in range(len(text)):
-        # XOR each character with key (cycled)
-        result += chr(ord(text[i]) ^ ord(key[i % len(key)]))
-    return result
-
-# Input from user
-plaintext = input("Enter your text: ")
-key = input("Enter key: ")
-
-# Encrypt
-ciphertext = xor_cipher(plaintext, key)
-print("Encrypted (raw):", ciphertext)
-print("Encrypted (hex):", ciphertext.encode().hex())
-
-# Decrypt (same function, XOR is reversible)
-decrypted = xor_cipher(ciphertext, key)
-print("Decrypted:", decrypted)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -1975,6 +2000,7 @@ def breadth_first_traversal(start):
             visited.add(node)
             queue.extend(graph[node])
 breadth_first_traversal(1)
+
 
 
 
