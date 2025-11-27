@@ -69,7 +69,7 @@ else:
 def xor_cipher(text, key):
     result = ""
     for i in range(len(text)):
-        # XOR each character with key (cycled)
+        
         result += chr(ord(text[i]) ^ ord(key[i % len(key)]))
     return result
 
