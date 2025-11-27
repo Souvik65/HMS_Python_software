@@ -2,21 +2,21 @@
 def caesar_cipher(text, shift):
     result = ""
     for char in text:
-        if char.isalpha():  # Check if it's a letter
+        if char.isalpha():  
             start = ord('A') if char.isupper() else ord('a')
             result += chr((ord(char) - start + shift) % 26 + start)
         else:
             result += char  # Keep spaces, punctuation, etc. as is
     return result
 
-# Input from user
+
 text = input("Enter your text: ")
 shift = int(input("Enter shift value: "))
 
 encrypted = caesar_cipher(text, shift)
 print("Encrypted text:", encrypted)
 
-# To decrypt
+
 decrypted = caesar_cipher(encrypted, -shift)
 print("Decrypted text:", decrypted)
 
