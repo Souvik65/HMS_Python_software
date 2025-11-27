@@ -1,25 +1,40 @@
 #caesar cipher
-def caesar_cipher(text, shift):
-    result = ""
-    for char in text:
-        if char.isalpha():  
-            start = ord('A') if char.isupper() else ord('a')
-            result += chr((ord(char) - start + shift) % 26 + start)
-        else:
-            result += char  # Keep spaces, punctuation, etc. as is
-    return result
+from Crypto.Cipher import DES
+import binascii
 
+def pad(text):
+    # DES requires data to be a multiple of 8 bytes
+    while len(text) % 8 != 0:
+        text += ' '
+    return text
 
-text = input("Enter your text: ")
-shift = int(input("Enter shift value: "))
+def des_encrypt(key, plaintext):
+    key = key.encode('utf-8')
+    cipher = DES.new(key, DES.MODE_ECB)
 
-encrypted = caesar_cipher(text, shift)
-print("Encrypted text:", encrypted)
+    padded_text = pad(plaintext)
+    encrypted_text = cipher.encrypt(padded_text.encode('utf-8'))
+    return binascii.hexlify(encrypted_text).decode('utf-8')
 
+def des_decrypt(key, encrypted_hex):
+    key = key.encode('utf-8')
+    cipher = DES.new(key, DES.MODE_ECB)
 
-decrypted = caesar_cipher(encrypted, -shift)
-print("Decrypted text:", decrypted)
+    encrypted_bytes = binascii.unhexlify(encrypted_hex)
+    decrypted_text = cipher.decrypt(encrypted_bytes)
+    return decrypted_text.decode('utf-8').rstrip()
 
+if __name__ == "__main__":
+    key = "abcdefgh"     # 8-byte DES key
+    plaintext = "Hello DES Example"
+
+    print("Original Text:", plaintext)
+
+    encrypted = des_encrypt(key, plaintext)
+    print("Encrypted Hex:", encrypted)
+
+    decrypted = des_decrypt(key, encrypted)
+    print("Decrypted Text:", decrypted)
 
 
 
