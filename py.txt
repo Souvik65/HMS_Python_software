@@ -1,3 +1,138 @@
+
+(a) Prime number check
+
+num = int(input("Enter a number: "))
+if num <= 1:
+    print("Not Prime")
+else:
+    for i in range(2, num):
+        if num % i == 0:
+            print("Not Prime")
+            break
+    else:
+        print("Prime")
+
+
+
+(b) Shuffle a deck of cards
+import random
+
+deck = []
+suits = ["Hearts", "Diamonds", "Clubs", "Spades"]
+ranks = ["2", "3", "4", "5", "6", "7", "8", "9", "10",
+         "Jack", "Queen", "King", "Ace"]
+
+for suit in suits:
+    for rank in ranks:
+        deck.append(rank + " of " + suit)
+
+random.shuffle(deck)
+
+for card in deck:
+    print(card)
+
+
+
+(c) Fibonacci using recursion
+def fib(n):
+    if n <= 1:
+        return n
+    return fib(n-1) + fib(n-2)
+
+n = int(input("Enter number of terms: "))
+
+for i in range(n):
+    print(fib(i), end=" ")
+
+
+
+
+(d) Prime numbers in an interval
+start = int(input("Enter start: "))
+end = int(input("Enter end: "))
+
+for num in range(start, end + 1):
+    if num > 1:
+        for i in range(2, num):
+            if num % i == 0:
+                break
+        else:
+            print(num, end=" ")
+
+
+
+
+
+(e) Simple Chatbot (basic if-else)
+
+print("Chatbot: Hello! Type 'bye' to exit.")
+while True:
+    user = input("You: ").lower()
+
+    if user == "hello":
+        print("Chatbot: Hi there!")
+    elif user == "how are you":
+        print("Chatbot: I am fine!")
+    elif user == "your name":
+        print("Chatbot: I am a simple chatbot.")
+    elif user == "bye":
+        print("Chatbot: Goodbye!")
+        break
+    else:
+        print("Chatbot: I don't understand.")
+
+
+
+
+
+(f) Chatbot using JSON file
+
+import json
+# Load JSON data
+with open("data.json") as file:
+    data = json.load(file)
+print("Chatbot: Hello! Type 'bye' to exit.")
+while True:
+    user = input("You: ").lower()
+
+    if user in data:
+        print("Chatbot:", data[user])
+        if user == "bye":
+            break
+    else:
+        print("Chatbot: I don't understand.")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #caesar cipher
 fdef caesar_cipher(text, shift):
     result = ""
