@@ -1,4 +1,165 @@
 
+# Simple Linear Regression 
+
+from google.colab import files
+uploaded = files.upload()
+import pandas as pd, matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression as LR
+from sklearn.model_selection import train_test_split as tts
+
+df = pd.read_csv("Bank_Churn.csv")
+X_tr, X_te, y_tr, y_te = tts(df[['Age']], df['CreditScore'], test_size=0.2, random_state=42)
+m = LR().fit(X_tr, y_tr)
+print(f"Intercept: {m.intercept_:.2f} | Slope: {m.coef_[0]:.2f}")
+
+plt.scatter(X_te, y_te, c='b'); plt.plot(X_te, m.predict(X_te), c='r'); plt.show()
+
+
+
+
+
+# Multiple Linear Regression 
+
+# Example: Predict 'CreditScore' based on 'Age', 'Balance', and 'EstimatedSalary'
+X = df[['Age', 'Balance', 'EstimatedSalary']]  # Independent variables
+y = df['CreditScore']  # Dependent variable
+
+# Split data
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Train model
+model = LinearRegression()
+model.fit(X_train, y_train)
+
+# Predictions
+y_pred = model.predict(X_test)
+
+# Coefficients
+print("Intercept:", model.intercept_)
+print("Coefficients:", model.coef_)
+
+# Compare actual vs predicted
+comparison = pd.DataFrame({'Actual': y_test, 'Predicted': y_pred})
+print(comparison.head())
+
+# Scatter plot of actual vs predicted
+plt.figure(figsize=(8,6))
+plt.scatter(y_test, y_pred, color='blue', alpha=0.6)
+
+# Add a line for perfect prediction
+plt.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], color='red', linewidth=2)
+
+plt.xlabel("Actual CreditScore")
+plt.ylabel("Predicted CreditScore")
+plt.title("Actual vs Predicted CreditScore (Multiple Linear Regression)")
+plt.show()
+
+
+
+
+
+# Support Vector Machine (SVM)
+import matplotlib.pyplot as plt
+from sklearn.svm import SVC
+from sklearn.datasets import make_blobs
+from sklearn.inspection import DecisionBoundaryDisplay as DBD
+
+# Generate data and fit model in two lines
+X, y = make_blobs(n_samples=40, centers=2, random_state=6)
+clf = SVC(kernel='linear', C=1000).fit(X, y)
+
+# Plot decision boundaries, margins, data points, and support vectors
+DBD.from_estimator(clf, X, plot_method='contour', levels=[-1, 0, 1], linestyles=['--', '-', '--'])
+plt.scatter(X[:, 0], X[:, 1], c=y)
+plt.scatter(clf.support_vectors_[:, 0], clf.support_vectors_[:, 1], s=100, facecolors='none', edgecolors='k')
+plt.show()
+
+
+
+
+
+
+# Correlation & Plotting
+from google.colab import files
+uploaded = files.upload()
+import pandas as pd, seaborn as sns, matplotlib.pyplot as plt
+# Load dataset
+df = pd.read_csv('Bank_Churn.csv')
+
+# 1. Correlation Heatmap
+sns.heatmap(df.select_dtypes('number').corr(), annot=True, cmap='coolwarm')
+plt.show()
+
+# 2. Histogram (Age)
+sns.histplot(df['Age'], bins=30)
+plt.show()
+
+# 3. Scatter Plot (Age vs Balance)
+sns.scatterplot(data=df, x='Age', y='Balance', hue='Exited')
+plt.show()
+
+
+
+
+
+
+# KNN
+from sklearn.datasets import load_iris
+from sklearn.model_selection import train_test_split
+from sklearn.neighbors import KNeighborsClassifier
+
+# 1. Load data and split in two lines
+X, y = load_iris(return_X_y=True)
+xtrain, xtest, ytrain, ytest = train_test_split(X, y, test_size=0.2)
+
+# 2. Train and Score in two lines
+knn = KNeighborsClassifier(n_neighbors=3).fit(xtrain, ytrain)
+print("Accuracy:", knn.score(xtest, ytest))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 (a) Prime number check
 
 num = int(input("Enter a number: "))
@@ -101,33 +262,6 @@ while True:
             break
     else:
         print("Chatbot: I don't understand.")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -265,31 +399,6 @@ if __name__ == "__main__":
 
     decrypted = des_decrypt(key, encrypted)
     print("Decrypted Text:", decrypted)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -508,63 +617,6 @@ for i in range(1, n+1):
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 Q6 statistical operation
 x=c (12,23,25,23,28)
 mean(x)
@@ -644,38 +696,6 @@ bar chart
 > x<-c("A","b","c","d")
 > y<-c(2,4,6,8)
 > barplot(y,names.arg = x,density = 10)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
