@@ -1,3 +1,172 @@
+# n-queen
+
+def nqueen(n, r=0, col=set(), d1=set(), d2=set(), board=[]):
+    if r == n:
+        for row in board:
+            print(row)
+        print()
+        return
+    for c in range(n):
+        if c in col or r-c in d1 or r+c in d2:
+            continue
+        col.add(c); d1.add(r-c); d2.add(r+c)
+        board.append('. '*c + 'Q ' + '. '*(n-c-1))
+        nqueen(n, r+1, col, d1, d2, board)
+        col.remove(c); d1.remove(r-c); d2.remove(r+c)
+        board.pop()
+nqueen(4)
+
+
+
+
+# tic tac toe
+
+b = [' '] * 9
+w = [(0,1,2),(3,4,5),(6,7,8),
+     (0,3,6),(1,4,7),(2,5,8),
+     (0,4,8),(2,4,6)]
+def show():
+    for i in range(0,9,3):
+        print(b[i], '|', b[i+1], '|', b[i+2])
+    print()
+t = 'X'
+for _ in range(9):
+    show()
+    m = int(input(f"{t} move (0-8): "))
+    if b[m] != ' ':
+        print("Invalid move")
+        continue
+    b[m] = t
+    if any(b[a]==b[b1]==b[c]==t for a,b1,c in w):
+        show()
+        print(t, "wins!")
+        break
+    t = 'O' if t=='X' else 'X'
+else:
+    show()
+    print("Draw")
+
+
+
+
+
+# A* program
+from heapq import *
+
+def a(g,h,s,t):
+    q=[(h[s],0,s,[])]
+    v=set()
+    while q:
+        f,c,u,p=heappop(q)
+        if u in v: continue
+        p=p+[u]
+        if u==t: return p
+        v.add(u)
+        for x,w in g[u]:
+            heappush(q,(c+w+h[x],c+w,x,p))
+
+g={'A':[('B',1),('C',3)],'B':[('D',1),('E',5)],
+   'C':[('F',2)],'D':[('G',4)],
+   'E':[('G',1)],'F':[('G',1)],'G':[]}
+
+h={'A':7,'B':6,'C':2,'D':1,'E':1,'F':1,'G':0}
+print(a(g,h,'A','G'))
+
+
+
+
+# A* program 
+from heapq import heappush, heappop
+def astar(graph, h, start, goal):
+    pq = [(h[start], 0, start, [])]  # (f, g, node, path)
+    visited = set()
+    
+    while pq:
+        f, g_cost, node, path = heappop(pq)
+        if node in visited:
+            continue
+        path = path + [node]
+        if node == goal:
+            return path
+        visited.add(node)
+        for nei, w in graph[node]:
+            heappush(pq, (g_cost + w + h[nei], g_cost + w, nei, path))
+# Example
+graph = {
+    'A':[('B',1),('C',3)],
+    'B':[('D',1),('E',5)],
+    'C':[('F',2)],
+    'D':[('G',4)],
+    'E':[('G',1)],
+    'F':[('G',1)],
+    'G':[]
+}
+
+h = {'A':7,'B':6,'C':2,'D':1,'E':1,'F':1,'G':0}
+print(astar(graph, h, 'A', 'G'))
+
+
+
+
+
+
+# AO* program
+def ao(g,c,n):
+    if n not in g:
+        return c[n], n
+    best = (float('inf'), "")
+    for op in g[n]:   # OR
+        cost = 0
+        paths = []
+        
+        for ch in op:   # AND
+            cc, cp = ao(g,c,ch)
+            cost += cc
+            paths.append(cp)
+        path = n + "->(" + " & ".join(paths) + ")"
+        
+        if cost < best[0]:
+            best = (cost, path)
+    
+    return best
+g = {'A':[['B','C'],['D']],
+     'B':[['E'],['F']],
+     'C':[['G']]}
+
+c = {'D':3,'E':2,'F':4,'G':1}
+print(ao(g,c,'A'))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Simple Linear Regression 
 
